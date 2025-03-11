@@ -97,6 +97,7 @@ width: 80px;
     padding: 7px;
     font-size: 40px;
     border-radius: 50%;
+    overflow: visible;
   }
   .bell{
     color:black;

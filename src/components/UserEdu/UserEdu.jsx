@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { FaRegFileAlt, FaBell, FaTruckPickup, FaUserAlt } from "react-icons/fa";
+import { FaRegFileAlt, FaBell, FaTruckPickup} from "react-icons/fa";
 import { MdMenu, MdSearch } from "react-icons/md";
 import { FaRegCalendarAlt, FaGraduationCap } from "react-icons/fa";
 import { MdDashboard } from "react-icons/md";
 import "./UserEdu.css";
 import logo from "../../assets/logo.png";
 import { Link} from "react-router-dom";
+import Profile from "../profile";
 
 const firebaseUrl =
   "https://register-d6145-default-rtdb.firebaseio.com/educational_contents.json";
@@ -94,12 +95,8 @@ const UserEdu = () => {
             <FaBell className="icon1 bell" />
             <div className="notification-badge">1</div>
             <div className="profile-container">
-              <div className="text-profile" style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                <FaUserAlt className="profile-icon"  />
-                <p style={{ fontSize: "14px", color: "black" }}>user</p>
-              </div>
-             
-            </div>
+        <Profile />
+      </div>
           </div>
         </header>
 

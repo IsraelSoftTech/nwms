@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaRegFileAlt, FaUserAlt, FaBell, FaTrash, FaCheckCircle,FaTruckPickup } from "react-icons/fa";
+import { FaRegFileAlt, FaBell, FaTrash, FaCheckCircle,FaTruckPickup } from "react-icons/fa";
 import { MdMenu, MdSearch} from "react-icons/md";
 import ws1 from "../../assets/ws1.jpeg"
 import ws2 from "../../assets/ws2.jpg"
@@ -10,6 +10,7 @@ import "./UserDash.css";
 // Import necessary components
 import logo from "../../assets/logo.png";
 import { Link} from "react-router-dom";
+import Profile from "../profile";
 
 
 
@@ -73,9 +74,8 @@ const UserDash = () => {
             <div className="notification-badge">1</div>
             {/* Profile container now fetches the username from firebase and opens the profile modal on click */}
             <div className="profile-container">
-              <FaUserAlt className="profile-icon" />
-              <p style={{ textAlign: "center", fontSize: "14px", color: "black", marginLeft: "4px" }}>user</p>
-            </div>
+        <Profile />
+      </div>
           </div>
         </header>
 

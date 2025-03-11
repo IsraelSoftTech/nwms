@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FaRegFileAlt, FaBell, FaTruckPickup, FaUserAlt, FaBan } from "react-icons/fa";
+import { FaRegFileAlt, FaBell, FaTruckPickup,FaBan } from "react-icons/fa";
 import {  MdMenu, MdSearch } from "react-icons/md";
 import {  } from 'react-icons/ai';
 
@@ -19,6 +19,7 @@ import Users from "../users/Users";
 import { getDatabase, ref, onValue } from "firebase/database";
 import firebaseApp from "../../firebaseConfig"; 
 import CustomAreaChart from "../recharts/CustomAreaChart";
+import Profile from "../profile";
 
 // Register necessary Chart.js components
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip);
@@ -105,15 +106,8 @@ const AdminDash = () => {
             <FaBell className="icon1 bell" />
             <div className="notification-badge">1</div>
             <div className="profile-container">
-            <div className="text-profile" style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "8px" }}>
-      <FaUserAlt className="profile-icon"/> 
-      <p style={{ textAlign: "center", fontSize: "14px", color: "black" }}>admin</p>
-   
-   
-    </div>
-              
-              
-            </div>
+        <Profile />
+      </div>
           </div>
         </header>
     
