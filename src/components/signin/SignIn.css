@@ -1,0 +1,167 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+  }
+  .head-items{
+   display: flex;
+   top: 30px;
+   position: absolute;
+   align-items: center;
+ text-align: center;
+ gap: 20px;
+
+  }
+  .head-items img{
+    width: 50px;
+    height: 50px;
+ 
+  }
+  .head-items h2{
+    color: black;
+  }
+  .spinner {
+    border: none;
+    border-top: 4px solid #FE7235; /* orangetop */
+    border-bottom: 4px solid #408AFD; /* orangetop */
+    border-left: 4px solid #FE7235; /* orangetop */
+    border-right: 4px solid #408AFD; /* orangetop */
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 2s linear infinite;
+    margin: 10px auto;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+ 
+  }
+  
+  .signin-box {
+    background: #FFFFFF;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Evenly spread soft shadow */
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%; /* Adjust width to fit small screens */
+    max-width: 500px; /* Ensure it doesn't exceed 500px on larger screens */
+    text-align: center;
+    box-sizing: border-box; /* Ensures padding doesn't affect width */
+    margin: 20px auto; /* Centers the box */
+}
+
+
+  
+
+  
+  h3 {
+    margin-bottom: 15px;
+    color: black
+  }
+  
+  .google-btn {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid rgb(241, 238, 238);
+    background: transparent;
+    cursor: pointer;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05); /* Evenly spread soft shadow */
+  }
+  
+  .or-text {
+    margin: 10px 0;
+    text-align: center;
+    color: #FE7235;
+    font-weight: bold;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  label {
+    text-align: left;
+    margin-bottom: 5px;
+    font-weight: bold;
+  
+    border-radius: 5px;
+    padding: 5px;
+  }
+  
+  input {
+   
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+color: black;
+border: 1px solid black;
+    border-radius: 5px;
+
+  }
+  .int{
+    border: 1px solid rgb(241, 238, 238);
+  }
+  .password-wrapper {
+
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  
+  .eye-icon {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    color: #FE7235;
+  }
+  
+  .signin-btn {
+    background: #FE7235;
+    border-radius: 4px;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+    width: 100%;
+  }
+  
+  .forgot-password {
+    color: #408AFD;
+    text-align: left;
+    margin: 10px 0;
+    cursor: pointer;
+  }
+  
+  p {
+    margin-top: 10px;
+    text-align: left;
+    color: black;
+  }
+  
+  @media (max-width: 400px) {
+    .signin-box {
+        width: 95%; /* Make it slightly smaller for very small screens */
+        padding: 15px; /* Reduce padding */
+    }
+     .head-items{
+      gap: 5px;
+     }
+}
+
+ 
