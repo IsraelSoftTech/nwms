@@ -12,19 +12,10 @@ import logo from "../../assets/logo.png";
 import { Link, useNavigate } from "react-router-dom";
 
 // Firebase URLs
-const firebaseUrl = "https://register-d6145-default-rtdb.firebaseio.com/users.json";
+
 const reportsUrl = "https://register-d6145-default-rtdb.firebaseio.com/submitReport.json";
 const viewedReportsUrl = "https://register-d6145-default-rtdb.firebaseio.com/viewedReports.json";
 
-// Abbreviate username text
-const abbreviateUsername = (username) => {
-  const words = username.split("_");
-  if (words.length >= 2) {
-    return (words[0][0] + words[1].slice(0, 2)).toUpperCase();
-  } else {
-    return username.slice(0, 3).toUpperCase();
-  }
-};
 
 const AdminReport = () => {
   //sidebar, profile setting
@@ -32,7 +23,7 @@ const AdminReport = () => {
   const [isSearchVisible, setIsSearchVisible] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
-  const [username, setUsername] = useState("Loading...");
+
   const [reports, setReports] = useState([]);
   const [confirmDelete, setConfirmDelete] = useState({ show: false, id: null });
   const navigate = useNavigate();
@@ -63,21 +54,7 @@ const AdminReport = () => {
   };
 
   useEffect(() => {
-    //display username
-    const fetchUsername = async () => {
-      try {
-        const response = await fetch(firebaseUrl);
-        const users = await response.json();
-        if (users) {
-          const loggedInUser = Object.values(users).find(user => user.role === "admin");
-          if (loggedInUser) {
-            setUsername(abbreviateUsername(loggedInUser.username));
-          }
-        }
-      } catch (error) {
-        console.error("Error fetching username:", error);
-      }
-    };
+
 //fetch reports
     const fetchReports = async () => {
       try {
@@ -96,7 +73,7 @@ const AdminReport = () => {
       }
     };
 
-    fetchUsername();
+
     fetchReports();
   }, []);
 
@@ -227,7 +204,7 @@ const AdminReport = () => {
             <div className="profile-container">
               <div className="text-profile" style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "8px" }}>
                 <FaUserAlt className="profile-icon" onClick={toggleProfileDropdown} />
-                <p style={{ textAlign: "center", fontSize: "14px", color: "black" }}>{username}</p>
+                <p style={{ textAlign: "center", fontSize: "14px", color: "black" }}>admin</p>
               </div>
               {isProfileDropdownOpen && (
                 <div className="profile-dropdown">

@@ -1,18 +1,18 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import SignIn from "./components/signin/SignIn";
 import SignUp from "./components/signup/SignUp";
 import UserDash from "./components/userDash/UserDash";
 import AdminDash from "./components/dashBoard/AdminDash";
-
 import Schedule from "./components/Schedule/Schedule";
-import Educare from "./components/Educare/Educare";
 import AdminReport from "./components/AdminReport/AdminReport";
 import UserReport from "./components/userReport/UserReport";
-
 import UserEdu from "./components/UserEdu/UserEdu";
+import AdminLegal from "./components/AdminLegal/AdminLegal";
+
 function App() {
   const firebaseUrl = "https://register-d6145-default-rtdb.firebaseio.com/users.json";
+  const [adminAdded, setAdminAdded] = useState(false); // Track whether the admin has been added
 
   const addAdminAccount = async () => {
     const adminData = {
@@ -47,6 +47,7 @@ function App() {
 
       if (addResponse.ok) {
         console.log("Admin account added successfully!");
+        setAdminAdded(true); // Update the state after adding the admin
       } else {
         console.log("Failed to add admin account.");
       }
@@ -56,11 +57,13 @@ function App() {
   };
 
   useEffect(() => {
-    addAdminAccount();
-  }, []);
+    if (!adminAdded) {
+      addAdminAccount(); // Only call addAdminAccount if it hasn't been added already
+    }
+  }, [adminAdded]); // Dependency on adminAdded to ensure it only runs once
 
   return (
-    <Router> {/* ✅ Wrap everything inside <Router> */}
+    <Router>
       <Routes>
         <Route path="/" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
@@ -68,9 +71,9 @@ function App() {
         <Route path="/user-dashboard" element={<UserDash />} />
         <Route path="/report" element={<AdminReport />} />
         <Route path="/schedule" element={<Schedule />} />
-        <Route path="/education" element={<Educare />} />
-        <Route path="/user-report" element={<UserReport/>} />
-        <Route path="/user-edu" element={<UserEdu/>} />
+        <Route path="/user-report" element={<UserReport />} />
+        <Route path="/user-edu" element={<UserEdu />} />
+        <Route path="/admin-legal" element={<AdminLegal />} />
       </Routes>
     </Router>
   );

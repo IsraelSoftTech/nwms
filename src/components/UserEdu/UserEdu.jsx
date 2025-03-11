@@ -10,47 +10,19 @@ import { Link} from "react-router-dom";
 const firebaseUrl =
   "https://register-d6145-default-rtdb.firebaseio.com/educational_contents.json";
 
-const abbreviateUsername = (username) => {
-  const words = username.split("_");
-  if (words.length >= 2) {
-    return (words[0][0] + words[1].slice(0, 2)).toUpperCase();
-  } else {
-    return username.slice(0, 3).toUpperCase();
-  }
-};
+
 
 const UserEdu = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isSearchVisible, setIsSearchVisible] = useState(false);
 
 
-  const [setUsername] = useState("Loading...");
+
   const [educationalContents, setEducationalContents] = useState([]);
   const [expandedContent, setExpandedContent] = useState(null);
 
 
-  useEffect(() => {
-    const fetchUsername = async () => {
-      try {
-        const response = await fetch(
-          "https://register-d6145-default-rtdb.firebaseio.com/users.json"
-        );
-        const users = await response.json();
-        if (users) {
-          const loggedInUser = Object.values(users).find(
-            (user) => user.role === "admin"
-          );
-          if (loggedInUser) {
-            setUsername(abbreviateUsername(loggedInUser.username));
-          }
-        }
-      } catch (error) {
-        console.error("Error fetching username:", error);
-      }
-    };
 
-    fetchUsername();
-  });
 // educational contents
   useEffect(() => {
     const fetchEducationalContents = async () => {
@@ -124,7 +96,7 @@ const UserEdu = () => {
             <div className="profile-container">
               <div className="text-profile" style={{ display: "flex", alignItems: "center", gap: "8px" }}>
                 <FaUserAlt className="profile-icon"  />
-                <p style={{ fontSize: "14px", color: "black" }}></p>
+                <p style={{ fontSize: "14px", color: "black" }}>user</p>
               </div>
              
             </div>

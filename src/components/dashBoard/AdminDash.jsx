@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { FaRegFileAlt, FaBell, FaTruckPickup, FaUserAlt } from "react-icons/fa";
+import { FaRegFileAlt, FaBell, FaTruckPickup, FaUserAlt, FaBan } from "react-icons/fa";
 import {  MdMenu, MdSearch } from "react-icons/md";
 import {  } from 'react-icons/ai';
 
 import {  FiUsers } from "react-icons/fi";
-import { FaRegCalendarAlt, FaGraduationCap } from "react-icons/fa";
+import { FaRegCalendarAlt } from "react-icons/fa";
 import { MdDashboard } from "react-icons/md";
 import "./AdminDash.css";
 import logo from "../../assets/logo.png";
@@ -23,17 +23,8 @@ import CustomAreaChart from "../recharts/CustomAreaChart";
 // Register necessary Chart.js components
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip);
 //abreviate username text
-const firebaseUrl = "https://register-d6145-default-rtdb.firebaseio.com/users.json";
 
-const abbreviateUsername = (username) => {
-  const words = username.split("_"); // Split by underscore if present
 
-  if (words.length >= 2) {
-    return (words[0][0] +  words[1].slice(0, 2)).toUpperCase(); // First letter of first word + First two letters of second word
-  } else {
-    return username.slice(0, 3).toUpperCase(); // If only one word, take first 3 letters
-  }
-};
 
 
 const AdminDash = () => {
@@ -86,29 +77,6 @@ const AdminDash = () => {
     setIsEditProfileOpen(false);
   };
 
-// username display
-const [username, setUsername] = useState("Loading...");
-
-useEffect(() => {
-  const fetchUsername = async () => {
-    try {
-      const response = await fetch(firebaseUrl);
-      const users = await response.json();
-
-      if (users) {
-        const loggedInUser = Object.values(users).find(user => user.role === "admin");
-
-        if (loggedInUser) {
-          setUsername(abbreviateUsername(loggedInUser.username));
-        }
-      }
-    } catch (error) {
-      console.error("Error fetching username:", error);
-    }
-  };
-
-  fetchUsername();
-}, []);
 
   return (
     <div className="dashboard-container">
@@ -134,8 +102,8 @@ useEffect(() => {
     </Link>
   </li>
   <li>
-    <Link to="/education" className="link">
-      <FaGraduationCap  className="icon1" /> Education
+    <Link to="/admin-legal" className="link">
+      <FaBan className="icon1" /> Illegal Reports
     </Link>
   </li>
  
@@ -162,7 +130,7 @@ useEffect(() => {
             <div className="profile-container">
             <div className="text-profile" style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "8px" }}>
       <FaUserAlt className="profile-icon" onClick={toggleProfileDropdown}/> 
-      <p style={{ textAlign: "center", fontSize: "14px", color: "black" }}>{username}</p>
+      <p style={{ textAlign: "center", fontSize: "14px", color: "black" }}>admin</p>
    
    
     </div>

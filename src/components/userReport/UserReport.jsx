@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FaRegFileAlt, FaUserAlt, FaBell, FaCheckCircle, FaTimesCircle, FaTruckPickup, FaSpinner, FaPaperPlane } from "react-icons/fa";
+import { FaRegFileAlt, FaUserAlt, FaBell, FaCheckCircle, FaTruckPickup, FaSpinner, FaPaperPlane } from "react-icons/fa";
 import { MdMenu, MdSearch } from "react-icons/md";
 import ws1 from "../../assets/ws1.jpeg";
 import ws2 from "../../assets/ws2.jpg";
@@ -12,9 +12,9 @@ import app from "../../firebaseConfig"; // Import your existing Firebase config
 
 // Import necessary components
 import logo from "../../assets/logo.png";
-import { Link, useNavigate } from "react-router-dom";
+import { Link} from "react-router-dom";
 
-const firebaseUrl = "https://register-d6145-default-rtdb.firebaseio.com/users.json";
+
 
 const UserReport = () => {
   const [formData, setFormData] = useState({
@@ -66,70 +66,14 @@ const UserReport = () => {
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  // New states for profile and modals
-  const [profile, setProfile] = useState({ username: "", email: "", password: "" });
-  const [profileKey, setProfileKey] = useState("");
-  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
-  const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
-
-  const navigate = useNavigate();
+  
+ 
 
   const handleMenuClick = () => {
     setIsSidebarOpen((prev) => !prev);
   };
 
-  // Fetch the logged in user's profile from firebase using the stored username
-  useEffect(() => {
-    const fetchProfile = async () => {
-      const storedUsername = localStorage.getItem("username");
-      if (!storedUsername) return;
-      try {
-        const response = await fetch(firebaseUrl);
-        const data = await response.json();
-        if (data) {
-          for (let key in data) {
-            if (data[key].username === storedUsername) {
-              setProfile(data[key]);
-              setProfileKey(key);
-              setFormData((prev) => ({ ...prev, user: data[key].username })); // Autofill user field
-              break;
-            }
-          }
-        }
-      } catch (error) {
-        console.error("Error fetching profile:", error);
-      }
-    };
-    fetchProfile();
-  }, []);
-
-  // Logout functionality
-  const handleLogout = () => {
-    localStorage.removeItem("username");
-    navigate("/");
-  };
-
-  // Save updated settings to firebase
-  const handleSaveSettings = async () => {
-    try {
-      const response = await fetch(`https://register-d6145-default-rtdb.firebaseio.com/users/${profileKey}.json`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(profile),
-      });
-      if (response.ok) {
-        alert("Profile updated successfully");
-        setIsSettingsModalOpen(false);
-      } else {
-        alert("Error updating profile");
-      }
-    } catch (error) {
-      console.error("Error updating profile", error);
-    }
-  };
-
+  
   return (
     <div className="dashboard-container">
       {/* Sidebar */}
@@ -151,12 +95,12 @@ const UserReport = () => {
             </Link>
           </li>
           <li>
-            <Link to="" className="link">
+            <Link to="/schedule" className="link">
               <FaRegCalendarAlt className="icon1" /> Schedule
             </Link>
           </li>
           <li>
-            <Link to="" className="link">
+            <Link to="/user-edu" className="link">
               <FaGraduationCap className="icon1" /> Education
             </Link>
           </li>
@@ -175,11 +119,9 @@ const UserReport = () => {
           <div className="top-icons">
             <FaBell className="icon1 bell" />
             <div className="notification-badge">1</div>
-            <div className="profile-container" onClick={() => setIsProfileModalOpen(true)}>
+            <div className="profile-container" >
               <FaUserAlt className="profile-icon" />
-              <p style={{ textAlign: "center", fontSize: "14px", color: "#FE7235", marginLeft: "4px" }}>
-                {profile.username || "User"}
-              </p>
+              <p style={{ textAlign: "center", fontSize: "14px", color: "black", marginLeft: "4px" }}>user</p>
             </div>
           </div>
         </header>
@@ -281,63 +223,10 @@ const UserReport = () => {
         </section>
       </main>
 
-      {/* Profile Options Modal */}
-      {isProfileModalOpen && (
-        <div className="modal-backdrop">
-          <div className="modal-user">
-            <h3>Profile Options</h3>
-            <div className="modal-option-buttons">
-              <button
-                onClick={() => {
-                  setIsSettingsModalOpen(true);
-                  setIsProfileModalOpen(false);
-                }}
-              >
-                Settings
-              </button>
-              <button onClick={handleLogout}>Logout</button>
-            </div>
-            <button onClick={() => setIsProfileModalOpen(false)} className="close-modal">
-              <FaTimesCircle />
-            </button>
-          </div>
-        </div>
-      )}
+     
 
-      {/* Settings Modal */}
-      {isSettingsModalOpen && (
-        <div className="modal-backdrop">
-          <div className="modal-user">
-            <h3>Edit Profile</h3>
-            <label>Username</label>
-            <input
-              type="text"
-              value={profile.username}
-              onChange={(e) => setProfile({ ...profile, username: e.target.value })}
-            />
-            <label>Email</label>
-            <input
-              type="email"
-              value={profile.email || ""}
-              onChange={(e) => setProfile({ ...profile, email: e.target.value })}
-            />
-            <label>Password</label>
-            <input
-              type="password"
-              value={profile.password}
-              onChange={(e) => setProfile({ ...profile, password: e.target.value })}
-            />
-            <div className="modal-buttons">
-              <button onClick={handleSaveSettings}>
-                <FaCheckCircle />
-              </button>
-              <button onClick={() => setIsSettingsModalOpen(false)}>
-                <FaTimesCircle />
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+     
+      
     </div>
   );
 };
