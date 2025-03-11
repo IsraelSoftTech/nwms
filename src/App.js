@@ -69,8 +69,8 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/admin-dashboard" element={<AdminDash />} />
         <Route path="/user-dashboard" element={<UserDash />} />
-        <Route path="/report" element={<AdminReport />} />
-        <Route path="/schedule" element={<Schedule />} />
+        <Route path="/admin-report" element={<AdminReport />} />
+        <Route path="/admin-schedule" element={<Schedule />} />
         <Route path="/user-report" element={<UserReport />} />
         <Route path="/user-edu" element={<UserEdu />} />
         <Route path="/admin-legal" element={<AdminLegal />} />

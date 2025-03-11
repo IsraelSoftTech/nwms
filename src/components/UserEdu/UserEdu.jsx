@@ -56,17 +56,17 @@ const UserEdu = () => {
         </div>
         <ul className={`nav-links ${isSidebarOpen ? "active" : ""}`}>
           <li>
-            <Link to="/admin-dashboard" className="link">
+            <Link to="/user-dashboard" className="link">
               <MdDashboard className="icon1" /> Dashboard
             </Link>
           </li>
           <li>
-            <Link to="/report" className="link">
+            <Link to="/user-report" className="link">
               <FaRegFileAlt className="icon1" /> Report
             </Link>
           </li>
           <li>
-            <Link to="/schedule" className="link">
+            <Link to="/user-schedule" className="link">
               <FaRegCalendarAlt className="icon1" /> Schedule
             </Link>
           </li>

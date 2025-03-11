@@ -8,7 +8,7 @@ import { FaRegCalendarAlt } from "react-icons/fa";
 import { MdDashboard } from "react-icons/md";
 import "./AdminDash.css";
 import logo from "../../assets/logo.png";
-import { Link,  useNavigate } from "react-router-dom";
+import { Link} from "react-router-dom";
 
 
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Tooltip } from "chart.js";
@@ -46,37 +46,15 @@ const AdminDash = () => {
   }, []);
 //--------------------------------------
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [isSearchVisible, setIsSearchVisible] = useState(false);
-
-  const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
-  const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
-  const navigate = useNavigate(); // Used for navigation
 
 
   const handleMenuClick = () => {
     setIsSidebarOpen((prev) => !prev);
   };
 
-  const handleSearchClick = () => {
-    setIsSearchVisible((prev) => !prev);
-  };
-  const toggleProfileDropdown = () => {
-    setIsProfileDropdownOpen((prev) => !prev);
-  };
 
-  const handleLogout = () => {
-    navigate("/"); // Redirect to Signin.jsx
-  };
-
-  const openEditProfile = () => {
-    setIsEditProfileOpen(true);
-    setIsProfileDropdownOpen(false);
-  };
-
-  const closeEditProfile = () => {
-    setIsEditProfileOpen(false);
-  };
-
+ 
+ 
 
   return (
     <div className="dashboard-container">
@@ -86,28 +64,27 @@ const AdminDash = () => {
           <span className="logo-icon"><img src={logo} alt=""/></span>
         </div>
         <ul className={`nav-links ${isSidebarOpen ? "active" : ""}`}>
-  <li>
-    <Link to="/admin-dashboard" className="active link">
-      <MdDashboard className="icon1" /> Dashboard
-    </Link>
-  </li>
-  <li>
-    <Link to="/report" className="link">
-      <FaRegFileAlt className="icon1" /> Report
-    </Link>
-  </li>
-  <li>
-    <Link to="/schedule" className="link">
-      <FaRegCalendarAlt className="icon1" /> Schedule
-    </Link>
-  </li>
-  <li>
-    <Link to="/admin-legal" className="link">
-      <FaBan className="icon1" /> Illegal Reports
-    </Link>
-  </li>
- 
-</ul>
+          <li>
+            <Link to="/admin-dashboard" className="active link">
+              <MdDashboard className="icon1" /> Dashboard
+            </Link>
+          </li>
+          <li>
+            <Link to="/admin-report" className="link">
+              <FaRegFileAlt className="icon1" /> Report
+            </Link>
+          </li>
+          <li>
+            <Link to="admin-schedule" className="link">
+              <FaRegCalendarAlt className="icon1" /> Schedule
+            </Link>
+          </li>
+          <li>
+            <Link to="/admin-legal" className="link">
+              <FaBan className="icon1" /> Illegal Dumpsites
+            </Link>
+          </li>
+        </ul>
       </aside>
 
       {/* Main Content */}
@@ -116,8 +93,8 @@ const AdminDash = () => {
         
           <h2>WASTE MANAGEMENT APPLICATION</h2>
           <MdMenu className="menu-icon" onClick={handleMenuClick} />
-          <div className={`search-box-mobile ${isSearchVisible ? "active" : ""}`}>
-            <MdSearch className="search-icon-mobile" onClick={handleSearchClick} />
+          <div className="search-box-mobile">
+            <MdSearch className="search-icon-mobile"/>
             <input type="text" placeholder="Place a search" />
           </div>
           <div className="search-box">
@@ -129,35 +106,17 @@ const AdminDash = () => {
             <div className="notification-badge">1</div>
             <div className="profile-container">
             <div className="text-profile" style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "8px" }}>
-      <FaUserAlt className="profile-icon" onClick={toggleProfileDropdown}/> 
+      <FaUserAlt className="profile-icon"/> 
       <p style={{ textAlign: "center", fontSize: "14px", color: "black" }}>admin</p>
    
    
     </div>
-              {isProfileDropdownOpen && (
-                <div className="profile-dropdown">
-                  <p onClick={openEditProfile}>Edit Profile</p>
-                  <p onClick={handleLogout}>Logout</p>
-                </div>
-              )}
+              
+              
             </div>
           </div>
         </header>
-        {/* Edit Profile Modal */}
-        {isEditProfileOpen && (
-          <div className="modal-overlay">
-            <div className="modal-content">
-              <h3 style={{color:"black"}}>Edit Profile</h3>
-              <label style={{color:"black"}}>Username:</label>
-              <input type="text" value="admin_account" readOnly  style={{color:"black"}}/>
-              <label style={{color:"black"}}>Password:</label>
-              <input type="text" value="admin_password" readOnly style={{color:"black"}}/>
-              <button className="close-btn" onClick={closeEditProfile} style={{color:"black"}}> 
-                Close
-              </button>
-            </div>
-          </div>
-        )}
+    
 
 <section className="stats-section">
       <div className="stat-card">

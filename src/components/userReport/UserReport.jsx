@@ -95,7 +95,7 @@ const UserReport = () => {
             </Link>
           </li>
           <li>
-            <Link to="/schedule" className="link">
+            <Link to="/user-schedule" className="link">
               <FaRegCalendarAlt className="icon1" /> Schedule
             </Link>
           </li>

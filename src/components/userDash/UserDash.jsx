@@ -47,7 +47,7 @@ const UserDash = () => {
             </Link>
           </li>
           <li>
-            <Link to="" className="link">
+            <Link to="user-schedule" className="link">
               <FaRegCalendarAlt className="icon1" /> Schedule
             </Link>
           </li>

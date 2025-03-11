@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { FaRegFileAlt, FaUserAlt, FaBell, FaTrash, FaCheckCircle, FaTimesCircle, FaSpinner, FaTruckPickup } from "react-icons/fa";
+import { FaRegFileAlt, FaUserAlt, FaBell, FaTrash, FaCheckCircle, FaTimesCircle, FaSpinner, FaTruckPickup, FaBan } from "react-icons/fa";
 import { MdMenu, MdSearch } from "react-icons/md";
 import { BsExclamationTriangle } from "react-icons/bs";
 import { FiTrash2 } from "react-icons/fi";
-import { FaRegCalendarAlt, FaGraduationCap } from "react-icons/fa";
+import { FaRegCalendarAlt} from "react-icons/fa";
 import { MdDashboard } from "react-icons/md";
 import "./AdminReport.css";
 
@@ -168,18 +168,18 @@ const AdminReport = () => {
             </Link>
           </li>
           <li>
-            <Link to="/report" className="active link">
+            <Link to="/admin-report" className="active link">
               <FaRegFileAlt className="icon1" /> Report
             </Link>
           </li>
           <li>
-            <Link to="/schedule" className="link">
+            <Link to="/admin-schedule" className="link">
               <FaRegCalendarAlt className="icon1" /> Schedule
             </Link>
           </li>
           <li>
-            <Link to="/education" className="link">
-              <FaGraduationCap className="icon1" /> Education
+            <Link to="/admin-legal" className="link">
+              <FaBan className="icon1" /> Illegal Dumpsites
             </Link>
           </li>
         </ul>
