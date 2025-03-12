@@ -166,7 +166,7 @@ top: 5px;
   }
   .stats-section{
     display: grid;
-    grid-template-columns: repeat(1, 1fr);
+  
     margin-top: 40px;
     width: 100%;
   

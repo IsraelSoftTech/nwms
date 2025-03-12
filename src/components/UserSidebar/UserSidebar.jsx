@@ -1,11 +1,12 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { MdDashboard } from "react-icons/md";
-import { FaRegFileAlt, FaRegCalendarAlt, FaBan, FaHome } from "react-icons/fa";
+import { FaRegFileAlt, FaRegCalendarAlt, FaHome, FaGraduationCap } from "react-icons/fa";
 import logo from "../../assets/logo.png";
-import "./Sidebar.css";
+import "./UserSidebar.css";
+import { FcGraduationCap } from "react-icons/fc";
 
-const Sidebar = ({ isSidebarOpen }) => {
+const UserSidebar = ({ isSidebarOpen }) => {
   const location = useLocation();
   
   return (
@@ -19,34 +20,34 @@ const Sidebar = ({ isSidebarOpen }) => {
         <ul className={`nav-links ${isSidebarOpen ? "active" : ""}`}>
           <li>
             <Link 
-              to="/admin-dashboard" 
-              className={`link ${location.pathname === "/admin-dashboard" ? "active" : ""}`}
+              to="/user-dashboard" 
+              className={`link ${location.pathname === "/user-dashboard" ? "active" : ""}`}
             >
               <MdDashboard className="icon1" /> Dashboard
             </Link>
           </li>
           <li>
             <Link 
-              to="/admin-report" 
-              className={`link ${location.pathname === "/admin-report" ? "active" : ""}`}
+              to="/user-report" 
+              className={`link ${location.pathname === "/user-report" ? "active" : ""}`}
             >
               <FaRegFileAlt className="icon1" /> Report
             </Link>
           </li>
           <li>
             <Link 
-              to="/admin-schedule" 
-              className={`link ${location.pathname === "/admin-schedule" ? "active" : ""}`}
+              to="/user-schedule" 
+              className={`link ${location.pathname === "/user-schedule" ? "active" : ""}`}
             >
               <FaRegCalendarAlt className="icon1" /> Schedule
             </Link>
           </li>
           <li>
             <Link 
-              to="/admin-legal" 
-              className={`link ${location.pathname === "/admin-legal" ? "active" : ""}`}
+              to="/user-edu" 
+              className={`link ${location.pathname === "/user-edu" ? "active" : ""}`}
             >
-              <FaBan className="icon1" /> Illegal Dumpsites
+              <FaGraduationCap className="icon1" /> Education
             </Link>
           </li>
         </ul>
@@ -67,8 +68,8 @@ const Sidebar = ({ isSidebarOpen }) => {
     <span>Schedule</span>
   </Link>
   <Link to="/admin-legal" className="mobile-nav-icon">
-    <FaBan />
-    <span>Illegal</span>
+    <FcGraduationCap />
+    <span>Education</span>
   </Link>
 </nav>
 
@@ -76,4 +77,4 @@ const Sidebar = ({ isSidebarOpen }) => {
   );
 };
 
-export default Sidebar;
+export default UserSidebar;

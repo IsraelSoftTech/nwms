@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { FaRegFileAlt, FaBell, FaTruckPickup} from "react-icons/fa";
-import { MdMenu, MdSearch } from "react-icons/md";
-import { FaRegCalendarAlt, FaGraduationCap } from "react-icons/fa";
-import { MdDashboard } from "react-icons/md";
+import { FaRegFileAlt,  FaTruckPickup} from "react-icons/fa";
+
+
 import "./UserEdu.css";
-import logo from "../../assets/logo.png";
-import { Link} from "react-router-dom";
-import Profile from "../profile";
+
+
+import UserSidebar from "../UserSidebar/UserSidebar";
+import Topbar from "../Topbar/Topbar";
 
 const firebaseUrl =
   "https://register-d6145-default-rtdb.firebaseio.com/educational_contents.json";
@@ -14,8 +14,7 @@ const firebaseUrl =
 
 
 const UserEdu = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [isSearchVisible, setIsSearchVisible] = useState(false);
+
 
 
 
@@ -49,56 +48,10 @@ const UserEdu = () => {
 // --------------------------------------------------------------------------------------------------------------------
   return (
     <div className="dashboard-container">
-      <aside className={`sidebar ${isSidebarOpen ? "active" : ""}`}>
-        <div className="logo">
-          <span className="logo-icon">
-            <img src={logo} alt="" />
-          </span>
-        </div>
-        <ul className={`nav-links ${isSidebarOpen ? "active" : ""}`}>
-          <li>
-            <Link to="/user-dashboard" className="link">
-              <MdDashboard className="icon1" /> Dashboard
-            </Link>
-          </li>
-          <li>
-            <Link to="/user-report" className="link">
-              <FaRegFileAlt className="icon1" /> Report
-            </Link>
-          </li>
-          <li>
-            <Link to="/user-schedule" className="link">
-              <FaRegCalendarAlt className="icon1" /> Schedule
-            </Link>
-          </li>
-          <li>
-            <Link to="/user-edu" className="active link">
-              <FaGraduationCap className="icon1" /> Education
-            </Link>
-          </li>
-        </ul>
-      </aside>
+  <UserSidebar/>
 
       <main className="main-content">
-        <header className="topbar">
-          <h2>WASTE MANAGEMENT APPLICATION</h2>
-          <MdMenu className="menu-icon" onClick={() => setIsSidebarOpen(!isSidebarOpen)} />
-          <div className={`search-box-mobile ${isSearchVisible ? "active" : ""}`}>
-            <MdSearch className="search-icon-mobile" onClick={() => setIsSearchVisible(!isSearchVisible)} />
-            <input type="text" placeholder="Place a search" />
-          </div>
-          <div className="search-box">
-            <MdSearch className="search-icon" />
-            <input type="text" placeholder="Place a search" />
-          </div>
-          <div className="top-icons">
-            <FaBell className="icon1 bell" />
-            <div className="notification-badge">1</div>
-            <div className="profile-container">
-        <Profile />
-      </div>
-          </div>
-        </header>
+    <Topbar/>
 
     
         <section className="stats-section">
