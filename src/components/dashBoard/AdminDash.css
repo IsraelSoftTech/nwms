@@ -13,60 +13,10 @@
     height: 100vh;
   }
   
-  .sidebar {
-    width: 250px;
-    background: #FFFFFF;
-    color: black;
-    padding: 20px;
- 
-    height: 100vh; /* Full height of viewport */
-      overflow-y: auto; /* Enable scrolling if content is too long */
-  }
   
-  .logo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
-  border-bottom: 1px solid rgb(197, 195, 195);
-    width: 100%;
-  }
-  .logo img {
-width: 80px;
+  
 
-  }
   
-.topbar h2{
-    color: black;
-    text-align: center;
-    align-items: center;
-    font-size: 22px;
-}
-  
-  .nav-links {
-    list-style: none;
-    
-  }
-  
-  .nav-links li {
-    padding: 12px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: black;
-  }
-  
-  .nav-links .active {
-    background: #FE7235;
-    color: #fff;
-    border-radius: 4px;
-    padding: 10px;
-    width: 100%;
-    display: flex;
-    justify-content: left;
-  }
-
   
   .main-content {
     flex: 1;
@@ -74,20 +24,7 @@ width: 80px;
     padding: 20px;
   }
 
-  .topbar {
-    display: flex; /* Use flex instead of grid */
-    align-items: center;
-    justify-content: space-between;
-    background: #FFFFFF;
-    top: 0;
-
   
-    width: 82vw; /* Ensure it spans the full width */
-    padding: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Evenly spread soft shadow */
-    position: fixed;
-    z-index: 1000; /* Ensure it stays above other elements */
-  }
   .icon1{
     font-size: 30px;
   }
@@ -98,37 +35,6 @@ width: 80px;
     font-size: 40px;
     border-radius: 50%;
     overflow: visible;
-  }
-  .bell{
-    color:black;
-  }
-  
-  .search-box {
-    display: flex;
-    align-items: center;
-    padding: 5px;
-    gap: 4px;
-    border-radius: 5px;
-    border: 1px solid rgb(197, 195, 195);
-  }
-  .search-icon{
-    font-size: 26px;
-    color: black;
-  }
-  .search-box input {
-    border: none;
-    outline: none;
-    padding: 5px;
-    background: none;
-  }
-  
-  .top-icons {
-    display: flex;
-    justify-content: right;
- 
-    align-items: center;
-
-    gap: 15px;
   }
   
   .stat-card {
@@ -150,24 +56,12 @@ width: 80px;
     text-align: center;
     color: black;
   }
-  .notification-badge{
-    background: #FE7235;
-    padding: 10px;
-    margin-left: -25px;
-    margin-top: -20px;
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+  
   .stats-section{
 
     display: grid;
     grid-template-columns: repeat(3,1fr);
-    margin-top: 60px;
+    margin-top: 70px;
     gap: 20px;
     padding: 10px;
   }
@@ -176,19 +70,6 @@ width: 80px;
     background: #FFFFFF;
     gap: 20px;
 
-  }
-  .profile-icon {
-    color:black;
-padding: 5px;
-    background: #fff;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Evenly spread soft shadow */
-    border-radius: 50%;
-    width: 38px;
-    height: 38px;
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    cursor: pointer;
   }
   
   .content-box, .graph-box {
@@ -231,14 +112,7 @@ padding: 5px;
   .user-box h3{
     color: black;
   }
-  .link{
-    color: black;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap:3px;
-    text-decoration: none;
-  }
+  
   .content-box li{
     display: flex;
     justify-content: space-between;
@@ -268,17 +142,7 @@ padding: 5px;
     .dashboard-container {
       flex-direction: column;
     }
-    
-    .sidebar {
-      width: 100%;
-      text-align: center;
-    height: 100%;
-    }
   
-    .nav-links {
-      display: flex;
-      justify-content: space-around;
-    }
   }
  
 /* -------------------------------------------------- */
@@ -287,72 +151,7 @@ padding: 5px;
   .dashboard-container {
     flex-direction: column;
   }
-  .logo{
-    margin-top:50px ;
-  }
-.logo img{
-  width: 60px;
- 
-}
-  .sidebar {
-    width: 100%;
-    text-align: center;
-    transform: translateX(-100%);
-    z-index: 100;
-    height: 100%;
-  }
 
-  .sidebar.active {
-    transform: translateX(0);
- 
-  }
-
-  .nav-links {
-    display: none;
-    flex-direction: column;
-  }
-
-  .nav-links.active {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .search-box {
-    display: none;
-  }
-
-  .search-icon {
-    display: block;
-    cursor: pointer;
-  }
-
-  .topbar {
-    justify-content: center;
-    width: 100%;
-    position: fixed;
-
-    left: 0;
-  }
-  .topbar h2{
-    display: none;
-  }
-.top-icons{
-margin-left: 220px;
-
-}
-.profile-icon{
-  font-size: 20px;
-}
-.bell{
-  font-size: 30px;
-}
-.notification-badge{
-font-size: 1px;
-width: 1px;
-height: 1px;
-padding: 3px;
-margin-left: -20px;
-}
 .main-content{
   position: absolute;
 top: 5px;
@@ -363,10 +162,13 @@ top: 5px;
   .user-illegal {
     display: grid;
     grid-template-columns: repeat(1, 1fr);
+   
   }
   .stats-section{
     display: grid;
     grid-template-columns: repeat(1, 1fr);
+    margin-top: 40px;
+    width: 100%;
   
   }
   .stat-card{
@@ -385,32 +187,18 @@ top: 5px;
     color: black;
   }
 
-  .search-icon {
-    display: block; /* Show on small screens */
-    cursor: pointer;
-  }
+  
 }
 
-.sidebar.active {
-  transform: translateX(0);
-  z-index: 200; /* Ensure it covers other components */
-  width: 250px; /* Maintain width when active */
-}
+
 
 /* 
 -------------------------------------- */
 /* For mobile devices */
 @media (max-width: 768px) {
   /* Ensure the sidebar is initially hidden on mobile */
-.topbar{
-  height: 60px;
-}
 
-  .sidebar.active {
-    left: 0; /* Show sidebar when active */
-    padding: 10px;
  
-  }
 
   /* Position menu icon (hamburger) */
   .menu-icon {
@@ -421,105 +209,8 @@ top: 5px;
     left: 30px;
   }
 
-
-
-  .search-box-mobile.active {
-    display: block;
-  }
-
-  /* Style for the search icon inside the search box */
-  .search-icon-mobile {
-    font-size: 20px;
-    color: #333;
-    margin-right: 5px;
-  }
- 
-
-  /* Adjust the search box inside the main content */
-  .search-box {
-    display: none;
-  }
-
-}
-.search-box-mobile{
-  display: none;
 }
 
-
-/* profile settings */
-.profile-container {
-  position: relative;
-  display: flex;
-}
-
-.profile-dropdown {
-  position: absolute;
-
-  right: 0;
-  top: 40px;
-  background: #fff;
-  border: 1px solid #ccc;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Evenly spread soft shadow */
-  border-radius: 5px;
-  overflow: hidden;
-  z-index: 1000;
-  width: 150px;
-}
-
-.profile-dropdown p {
-  color: black;
-  padding: 10px;
-  margin: 0;
-  cursor: pointer;
-  text-align: center;
-}
-
-.profile-dropdown p:hover {
-  background: #f4f4f4;
-}
-
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 2000;
-}
-
-.modal-content {
-  background: white;
-
-  padding: 20px;
-  border-radius: 10px;
-  width: 300px;
-  text-align: center;
-}
-
-.modal-content input {
-  width: 100%;
-  padding: 8px;
-  margin: 10px 0;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.close-btn {
-  background: #d9534f;
-  color: rgb(209, 6, 6);
-  padding: 8px 15px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.close-btn:hover {
-  background: #c9302c;
-}
 /* graph */
 .graph-box {
   width: 100%;

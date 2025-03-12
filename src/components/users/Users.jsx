@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import { getDatabase, ref, onValue, update, remove } from "firebase/database";
-import firebaseApp from "../../firebaseConfig"; // Ensure this file exports your initialized Firebase app
+import firebaseApp from "../../firebaseConfig";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
@@ -12,11 +12,11 @@ const Users = () => {
   const [showEditModal, setShowEditModal] = useState(false);
 
   const db = getDatabase(firebaseApp);
-  const usersRef = ref(db, "users");
 
-  // Fetch users from Firebase
   useEffect(() => {
-    onValue(usersRef, (snapshot) => {
+    const usersRef = ref(db, "users"); // Define usersRef inside useEffect
+
+    const unsubscribe = onValue(usersRef, (snapshot) => {
       if (snapshot.exists()) {
         const data = snapshot.val();
         const usersArray = Object.keys(data).map((key) => ({
@@ -26,23 +26,22 @@ const Users = () => {
         setUsers(usersArray);
       }
     });
-  },);
 
-  // Handle edit
+    return () => unsubscribe(); // Clean up listener to prevent memory leaks
+  }, [db]); // Add `db` as a dependency
+
   const handleEdit = (user) => {
     setEditUserId(user.id);
     setEditedUser({ ...user });
     setShowEditModal(true);
   };
 
-  // Handle save
   const handleSave = async () => {
     await update(ref(db, `users/${editUserId}`), editedUser);
     setEditUserId(null);
     setShowEditModal(false);
   };
 
-  // Handle delete confirmation
   const handleDelete = async () => {
     await remove(ref(db, `users/${userToDelete}`));
     setShowDeleteModal(false);
@@ -50,7 +49,7 @@ const Users = () => {
   };
 
   return (
-    <section >
+    <section>
       <div className="user-box">
         <h3>Users</h3>
         <table>
@@ -84,30 +83,30 @@ const Users = () => {
         </table>
       </div>
 
-      {/* Delete Confirmation Modal */}
       {showDeleteModal && (
         <div className="modal">
           <div className="modal-content">
-            <p style={{color:"red"}}>Do you want to delete this user?</p>
+            <p style={{ color: "red" }}>Do you want to delete this user?</p>
             <button onClick={handleDelete}>Yes</button>
             <button onClick={() => setShowDeleteModal(false)}>No</button>
           </div>
         </div>
       )}
 
-      {/* Edit Modal */}
       {showEditModal && (
         <div className="modal">
           <div className="modal-content">
             <h4>Edit User</h4>
             <input
-              type="text" style={{color:"black"}}
+              type="text"
+              style={{ color: "black" }}
               value={editedUser.username || ""}
               onChange={(e) => setEditedUser({ ...editedUser, username: e.target.value })}
               placeholder="Enter Name"
             />
             <input
-              type="email" style={{color:"black"}}
+              type="email"
+              style={{ color: "black" }}
               value={editedUser.email || ""}
               onChange={(e) => setEditedUser({ ...editedUser, email: e.target.value })}
               placeholder="Enter Email"

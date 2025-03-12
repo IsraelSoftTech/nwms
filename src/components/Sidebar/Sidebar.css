@@ -1,0 +1,111 @@
+.sidebar {
+    width: 250px;
+    background: #FFFFFF;
+    color: black;
+    padding: 20px;
+ 
+    height: 100vh; /* Full height of viewport */
+      overflow-y: auto; /* Enable scrolling if content is too long */
+  }
+  
+  .logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  border-bottom: 1px solid rgb(197, 195, 195);
+    width: 100%;
+  }
+  .logo img {
+width: 80px;
+
+  }
+  .nav-links {
+    list-style: none;
+    
+  }
+  
+  .nav-links li {
+    padding: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: black;
+  }
+  
+  .nav-links .active {
+    background: #FE7235;
+    color: #fff;
+    border-radius: 4px;
+    padding: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: left;
+  }
+  .link{
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap:3px;
+    text-decoration: none;
+  }
+ 
+/* ---------------------------------------- */
+
+
+
+@media (max-width: 768px) {
+  .link.active::after {
+    content: ""; /* Create a pseudo-element for the underline */
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0; /* Position it at the bottom */
+    height: 2px; /* Height of the underline */
+    background: #FE7235; /* Soft color */
+    border-radius: 2px; /* Rounded edges */
+  }
+  
+
+    
+.link.active {
+    position: relative; /* Position relative to create the underline effect */
+    color: #FE7235; /* Change text color for active link */
+  }
+  .mobile-nav {
+    display: none; /* Hide by default */
+    position: fixed; /* Fix to the bottom */
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: white; /* Background color */
+    padding: 10px 0;
+    border-top: 1px solid rgb(197, 195, 195);
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    justify-content: space-around;
+    z-index: 1000; /* Ensure it appears above other content */
+  }
+  
+  .mobile-nav-icon {
+    flex: 1; /* Flex to take equal space */
+    text-align: center; /* Center the icons */
+    color: black; /* Icon color */
+  }
+  
+  .mobile-nav-icon svg {
+    font-size: 24px; /* Icon size */
+  }
+  
+  /* Media query to show mobile-nav on mobile devices */
+  @media (max-width: 768px) {
+    .sidebar {
+      display: none; /* Hide sidebar on mobile */
+    }
+  
+    .mobile-nav {
+      display: flex; /* Show mobile nav */
+    }
+  }
+  }

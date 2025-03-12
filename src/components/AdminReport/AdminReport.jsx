@@ -1,88 +1,37 @@
-import React, { useState } from "react";
+import React from "react";
 import {
-  FaRegFileAlt,
- 
-  FaBell,
+
   FaTrash,
   FaCheckCircle,
   FaTimesCircle,
   FaSpinner,
   FaTruckPickup,
-  FaBan,
+
 } from "react-icons/fa";
-import { MdMenu, MdSearch } from "react-icons/md";
-import { BsExclamationTriangle } from "react-icons/bs";
+import { BsExclamationTriangle } from "react-icons/bs"
 import { FiTrash2 } from "react-icons/fi";
-import { FaRegCalendarAlt } from "react-icons/fa";
-import { MdDashboard } from "react-icons/md";
+
 import "./AdminReport.css";
-import Profile from "../profile";
+
 // Import necessary components
-import logo from "../../assets/logo.png";
-import { Link } from "react-router-dom";
+
+import Sidebar from "../Sidebar/Sidebar";
+import Topbar from "../Topbar/Topbar";
 
 const AdminReport = () => {
-  //sidebar
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  const handleMenuClick = () => {
-    setIsSidebarOpen((prev) => !prev);
-  };
+
+
+ 
 
   return (
     <div className="dashboard-container">
       {/* Sidebar */}
-      <aside className={`sidebar ${isSidebarOpen ? "active" : ""}`}>
-        <div className="logo">
-          <span className="logo-icon">
-            <img src={logo} alt="" />
-          </span>
-        </div>
-        <ul className={`nav-links ${isSidebarOpen ? "active" : ""}`}>
-          <li>
-            <Link to="/admin-dashboard" className="link">
-              <MdDashboard className="icon1" /> Dashboard
-            </Link>
-          </li>
-          <li>
-            <Link to="/admin-report" className="active link">
-              <FaRegFileAlt className="icon1" /> Report
-            </Link>
-          </li>
-          <li>
-            <Link to="/admin-schedule" className="link">
-              <FaRegCalendarAlt className="icon1" /> Schedule
-            </Link>
-          </li>
-          <li>
-            <Link to="/admin-legal" className="link">
-              <FaBan className="icon1" /> Illegal Dumpsites
-            </Link>
-          </li>
-        </ul>
-      </aside>
+     <Sidebar/>
 
       {/* Main Content */}
       <main className="main-content">
-        <header className="topbar">
-          <h2>WASTE MANAGEMENT APPLICATION</h2>
-          <MdMenu className="menu-icon" onClick={handleMenuClick} />
-          <div className="search-box-mobile">
-            <MdSearch className="search-icon-mobile" />
-            <input type="text" placeholder="Place a search" />
-          </div>
-          <div className="search-box">
-            <MdSearch className="search-icon" />
-            <input type="text" placeholder="Place a search" />
-          </div>
-          <div className="top-icons">
-            <FaBell className="icon1 bell" />
-            <div className="notification-badge">1</div>
-            <div className="profile-container">
-        <Profile />
-      </div>
-          </div>
-        </header>
+       <Topbar/>
 
         <section className="stats-section">
           <div className="stat-card">

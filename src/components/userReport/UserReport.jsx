@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { FaRegFileAlt, FaBell, FaCheckCircle, FaTruckPickup, FaSpinner, FaPaperPlane } from "react-icons/fa";
-import { MdMenu, MdSearch } from "react-icons/md";
+import { FaRegFileAlt, FaCheckCircle, FaTruckPickup, FaSpinner, FaPaperPlane } from "react-icons/fa";
+
 import ws1 from "../../assets/ws1.jpeg";
 import ws2 from "../../assets/ws2.jpg";
 import { FaRegCalendarAlt, FaGraduationCap } from "react-icons/fa";
@@ -13,7 +13,8 @@ import app from "../../firebaseConfig"; // Import your existing Firebase config
 // Import necessary components
 import logo from "../../assets/logo.png";
 import { Link} from "react-router-dom";
-import Profile from "../profile";
+
+import Topbar from "../Topbar/Topbar";
 
 
 
@@ -65,14 +66,8 @@ const UserReport = () => {
     setFormData({ type: "", description: "", image: null, location: "", date: "", user: "" });
   };
 
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarOpen] = useState(false);
 
-  
- 
-
-  const handleMenuClick = () => {
-    setIsSidebarOpen((prev) => !prev);
-  };
 
   
   return (
@@ -110,21 +105,7 @@ const UserReport = () => {
 
       {/* Main Content */}
       <main className="main-content">
-        <header className="topbar">
-          <h2>WASTE MANAGEMENT APPLICATION</h2>
-          <MdMenu className="menu-icon" onClick={handleMenuClick} />
-          <div className="search-box">
-            <MdSearch className="search-icon" />
-            <input type="text" placeholder="Place a search" />
-          </div>
-          <div className="top-icons">
-            <FaBell className="icon1 bell" />
-            <div className="notification-badge">1</div>
-            <div className="profile-container">
-        <Profile />
-      </div>
-          </div>
-        </header>
+       <Topbar/>
 
         <section className="stats-section">
           <div className="stat-card">
