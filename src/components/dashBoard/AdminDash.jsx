@@ -4,6 +4,7 @@ import { FaRegFileAlt, FaTruckPickup } from "react-icons/fa";
 import { FiUsers } from "react-icons/fi";
 
 import "./AdminDash.css";
+import ws1 from "../../assets/ws1.jpeg";
 
 import {
   Chart as ChartJS,
@@ -97,10 +98,22 @@ const AdminDash = () => {
             <Users />
           </div>
 
-          <div className="user-box">
-            <h3>Illegal Dump Sites</h3>
-            <div className="graph-placeholder"></div>
-          </div>
+      
+          {/* -------------------------------------------------------------------- */}
+<div className="user-box-img">
+     
+           
+     <div className="waste-img">
+       <img src={ws1} alt=""/>
+     </div>
+     
+     </div>
+  
+  
+  
+
+{/* --------------------------------------------------------------------------- */}
+        
         </section>
       </main>
     </div>

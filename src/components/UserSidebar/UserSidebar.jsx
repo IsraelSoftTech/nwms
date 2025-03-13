@@ -4,7 +4,7 @@ import { MdDashboard } from "react-icons/md";
 import { FaRegFileAlt, FaRegCalendarAlt, FaHome, FaGraduationCap } from "react-icons/fa";
 import logo from "../../assets/logo.png";
 import "./UserSidebar.css";
-import { FcGraduationCap } from "react-icons/fc";
+
 
 const UserSidebar = ({ isSidebarOpen }) => {
   const location = useLocation();
@@ -53,26 +53,25 @@ const UserSidebar = ({ isSidebarOpen }) => {
         </ul>
       </aside>
 
-     {/* Mobile Navigation */}
-<nav className="mobile-nav">
-  <Link to="/admin-dashboard" className="mobile-nav-icon">
-    <FaHome />
-    <span>Home</span>
-  </Link>
-  <Link to="/admin-report" className="mobile-nav-icon">
-    <FaRegFileAlt />
-    <span>Report</span>
-  </Link>
-  <Link to="/admin-schedule" className="mobile-nav-icon">
-    <FaRegCalendarAlt />
-    <span>Schedule</span>
-  </Link>
-  <Link to="/admin-legal" className="mobile-nav-icon">
-    <FcGraduationCap />
-    <span>Education</span>
-  </Link>
-</nav>
-
+      {/* Mobile Navigation */}
+      <nav className="mobile-nav">
+        <Link to="/user-dashboard" className="mobile-nav-icon">
+          <FaHome style={{ color: location.pathname === "/user-dashboard" ? "#FE7235" : "black" }} />
+          <span>Home</span>
+        </Link>
+        <Link to="/user-report" className="mobile-nav-icon">
+          <FaRegFileAlt style={{ color: location.pathname === "/user-report" ? "#FE7235" : "black" }} />
+          <span>Report</span>
+        </Link>
+        <Link to="/user-schedule" className="mobile-nav-icon">
+          <FaRegCalendarAlt style={{ color: location.pathname === "/user-schedule" ? "#FE7235" : "black" }} />
+          <span>Schedule</span>
+        </Link>
+        <Link to="/user-edu" className="mobile-nav-icon">
+          <FaGraduationCap style={{ color: location.pathname === "/user-edu" ? "#FE7235" : "black" }} />
+          <span>Education</span>
+        </Link>
+      </nav>
     </div>
   );
 };

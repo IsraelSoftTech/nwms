@@ -1,106 +1,110 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaRegFileAlt, FaCheckCircle, FaTruckPickup, FaSpinner, FaPaperPlane } from "react-icons/fa";
+import { getDatabase, ref, set, onValue } from "firebase/database";
 
 import ws1 from "../../assets/ws1.jpeg";
 import ws2 from "../../assets/ws2.jpg";
 
 import "./UserReport.css";
 
-import { getDatabase, ref, push } from "firebase/database";
-import app from "../../firebaseConfig"; // Import your existing Firebase config
-
-// Import necessary components
-
 import Topbar from "../Topbar/Topbar";
 import UserSidebar from "../UserSidebar/UserSidebar";
-
-
 
 const UserReport = () => {
   const [formData, setFormData] = useState({
     type: "",
     description: "",
-    image: null,
     location: "",
-    date: "", // New date field
-    user: "", // New user field
+    date: "",
+    user: "",
+    image: null,
   });
-  const [isFormComplete, setIsFormComplete] = useState(false);
-  const [successMessage, setSuccessMessage] = useState("");
+  const [submittedReports, setSubmittedReports] = useState([]);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+
+  const db = getDatabase();
 
   useEffect(() => {
-    // Check if all fields are filled
-    setIsFormComplete(
-      formData.type &&
-      formData.description &&
-      formData.image &&
-      formData.location &&
-      formData.date && // Ensure date is included
-      formData.user // Ensure user is included
-    );
-  }, [formData]);
+    const reportsRef = ref(db, 'submittedReports/');
+    onValue(reportsRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        setSubmittedReports(Object.values(data));
+      }
+    });
+  }, [db]);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    const { name, value, files } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: name === "image" ? files[0] : value,
+    }));
   };
 
-  const handleImageUpload = (e) => {
-    setFormData((prev) => ({ ...prev, image: e.target.files[0] }));
-  };
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (!isFormComplete) return;
+    const reportId = Date.now(); // Simple ID generation
+    const reportData = {
+      ...formData,
+      id: reportId,
+    };
 
-    const db = getDatabase(app);
-    const reportsRef = ref(db, "submitReport");
-    await push(reportsRef, formData);
-
-    setSuccessMessage("Report Submitted Successfully!");
-    setTimeout(() => setSuccessMessage(""), 3000); // Hide after 3s
-
-    // Reset form
-    setFormData({ type: "", description: "", image: null, location: "", date: "", user: "" });
+    // Save to Firebase
+    set(ref(db, `submittedReports/${reportId}`), reportData)
+      .then(() => {
+        setShowSuccessMessage(true);
+        setTimeout(() => setShowSuccessMessage(false), 3000);
+        
+        // Reset the form
+        setFormData({
+          type: "",
+          description: "",
+          location: "",
+          date: "",
+          user: "",
+          image: null,
+        });
+        // Reset file input
+        document.querySelector('input[type="file"]').value = "";
+      })
+      .catch((error) => {
+        console.error("Error submitting report:", error);
+      });
   };
 
+  const isFormComplete = Object.values(formData).every((field) => field);
 
-  
   return (
     <div className="dashboard-container">
-      {/* Sidebar */}
-     <UserSidebar/>
-
-      {/* Main Content */}
+      <UserSidebar />
       <main className="main-content">
-       <Topbar/>
-
+        <Topbar />
         <section className="stats-section">
+          {/* Stat Cards */}
           <div className="stat-card">
-            <FaRegFileAlt className="icon" style={{ color: "rgb(77, 76, 76)", background: "#e2e4e3", padding: "7px", fontSize: "40px", borderRadius: "50%" }} />
+            <FaRegFileAlt className="icon2" />
             <h3>Total Reports</h3>
-            <p>21</p>
+            <p>{submittedReports.length}</p>
           </div>
           <div className="stat-card">
-            <FaTruckPickup className="icon" style={{ color: "rgb(77, 76, 76)", background: "#e2e4e3", padding: "7px", fontSize: "40px", borderRadius: "50%" }} />
+            <FaTruckPickup className="icon2" />
             <h3>Pending Pick-ups</h3>
             <p>12</p>
           </div>
           <div className="stat-card">
-            <FaCheckCircle className="icon" style={{ color: "rgb(77, 76, 76)", background: "#e2e4e3", padding: "7px", fontSize: "40px", borderRadius: "50%" }} />
+            <FaCheckCircle className="icon2" />
             <h3>Completed Pick-ups</h3>
             <p>10</p>
           </div>
         </section>
 
-        {/* Reports of submission */}
         <section className="user-illegal">
           <div className="user-box">
-            <h3>Report a waste</h3>
-            {successMessage && <div className="success-message">{successMessage}</div>}
+            <h3>Report for waste collection</h3>
             <form className="report-waste-form" onSubmit={handleSubmit}>
               <label><h4>Type of Waste:</h4></label>
-              <select name="type" onChange={handleChange} value={formData.type}>
+              <select name="type" onChange={handleChange} required>
                 <option value="">Select</option>
                 <option>Plastic</option>
                 <option>Organic</option>
@@ -113,27 +117,33 @@ const UserReport = () => {
               </select>
 
               <label><h4>Description:</h4></label>
-              <textarea name="description" onChange={handleChange} value={formData.description} placeholder="Describe the waste issue..." required></textarea>
+              <textarea name="description" placeholder="Describe the waste issue..." onChange={handleChange} required></textarea>
 
               <label><h4>Upload Image:</h4></label>
-              <input type="file" onChange={handleImageUpload} accept="image/*" required/>
+              <input type="file" name="image" onChange={handleChange} required />
 
-              <label><h4>Pick Location:</h4></label>
-              <input type="text" name="location" onChange={handleChange} value={formData.location} placeholder="Enter location" required />
+              <label><h4>Location:</h4></label>
+              <input type="text" name="location" placeholder="Enter location" onChange={handleChange} required />
 
               <label><h4>Date:</h4></label>
-              <input type="date" name="date" onChange={handleChange} value={formData.date} required /> {/* New date input */}
+              <input type="date" name="date" onChange={handleChange} required />
 
               <label><h4>User:</h4></label>
-              <input type="text" name="user" value={formData.user} readOnly /> {/* User field auto-filled */}
+              <input type="text" name="user" onChange={handleChange} required />
 
-              <button type="submit" className={`submit-btn ${isFormComplete ? "active" : ""}`} disabled={!isFormComplete}>
+              <button type="submit" className="submit-btn" style={{ background: isFormComplete ? "#FE7235" : "#ccc" }}>
                 Submit Report
               </button>
             </form>
-          </div>
-          {/* ------------------------------------------ */}
 
+            {showSuccessMessage && (
+              <div className="success-message">
+                Report Submitted Successfully
+              </div>
+            )}
+          </div>
+
+          {/* Report Status */}
           <div className="user-box">
             <h3>Report Status</h3>
             <div className="status-steps">
@@ -154,28 +164,20 @@ const UserReport = () => {
               </div>
             </div>
           </div>
-          {/* -------------------------------------------------------------------- */}
+          
+          {/* Images */}
           <div className="user-box-img">
             <div className="waste-img">
               <img src={ws1} alt="" />
             </div>
           </div>
-          {/* ------------------------------------------ */}
           <div className="user-box-img">
             <div className="waste-img">
               <img src={ws2} alt="" />
             </div>
           </div>
-          {/* ------------------------------------------ */}
-
-          {/* --------------------------------------------------------------------------- */}
         </section>
       </main>
-
-     
-
-     
-      
     </div>
   );
 };
