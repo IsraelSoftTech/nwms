@@ -9,6 +9,7 @@ import AdminReport from "./components/AdminReport/AdminReport";
 import UserReport from "./components/userReport/UserReport";
 import UserEdu from "./components/UserEdu/UserEdu";
 import AdminLegal from "./components/AdminLegal/AdminLegal";
+import AllWords from "./components/AllWords";
 
 function App() {
   const firebaseUrl = "https://register-d6145-default-rtdb.firebaseio.com/users.json";
@@ -63,8 +64,11 @@ function App() {
   }, [adminAdded]); // Dependency on adminAdded to ensure it only runs once
 
   return (
+    <div>
+      <AllWords/>
     <Router>
       <Routes>
+        
         <Route path="/" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/admin-dashboard" element={<AdminDash />} />
@@ -76,6 +80,7 @@ function App() {
         <Route path="/admin-legal" element={<AdminLegal />} />
       </Routes>
     </Router>
+    </div>
   );
 }
 
