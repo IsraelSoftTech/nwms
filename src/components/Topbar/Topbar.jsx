@@ -1,12 +1,37 @@
 import React, { useState } from "react";
 import { MdClose, MdSearch } from "react-icons/md";
-import { FaBell } from "react-icons/fa";
-
+import { FaBell, FaCog, FaSignOutAlt } from "react-icons/fa";
+import NotifyWrapper from "../Notify/Notify"; // Import Notify component
+import Profile from "../profile"; // Import Profile component
+import { useNavigate } from "react-router-dom"; // Import useNavigate for redirecting
 import "./Topbar.css";
 
-const Topbar = ({ handleMenuClick }) => {
-  
+const Topbar = () => {
   const [showSearch, setShowSearch] = useState(false);
+  const [showNotify, setShowNotify] = useState(false);
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const [showProfile, setShowProfile] = useState(false);
+  const username = localStorage.getItem("username"); // Get username from localStorage
+  const navigate = useNavigate();
+
+  const toggleNotify = () => {
+    setShowNotify(!showNotify);
+  };
+
+  const toggleProfileMenu = () => {
+    setShowProfileMenu(!showProfileMenu);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("username");
+    navigate("/"); // Redirect to SignIn page
+  };
+
+  const handleSettingsClick = () => {
+    setShowProfile(true);
+    setShowProfileMenu(false); // Close profile menu on settings click
+  };
+
   return (
     <header className="topbar">
       <h1>
@@ -19,24 +44,41 @@ const Topbar = ({ handleMenuClick }) => {
       </div>
 
       <div className={`topbar-container ${showSearch ? "search-active" : ""}`}>
-      {/* Search Bar (Shown Only When Search Icon is Clicked) */}
-      {showSearch ? (
-        <div className="search-bar">
-          <input type="text" placeholder="place a search" autoFocus />
-          <MdClose className="close-icon" onClick={() => setShowSearch(false)} />
-        </div>
-      ) : (
-        /* Default Topbar */
-        <div className="top-icons">
-          <MdSearch className="mobile-search-icon" onClick={() => setShowSearch(true)} />
-          <FaBell className="icon1 bell" />
-          <div className="notification-badge">1</div>
-          <div className="profile-container-text">
-            <h6>AA</h6>
+        {showSearch ? (
+          <div className="search-bar">
+            <input type="text" placeholder="place a search" autoFocus />
+            <MdClose className="close-icon" onClick={() => setShowSearch(false)} />
           </div>
+        ) : (
+          <div className="top-icons">
+            <MdSearch className="mobile-search-icon" onClick={() => setShowSearch(true)} />
+            <FaBell
+              className={`icon1 bell ${showNotify ? 'active' : ''}`} // Add active class based on showNotify
+              onClick={toggleNotify} style={{ cursor: "pointer" }}
+            />
+            <div className="notification-badge">1</div>
+            <div className="profile-container-text" onClick={toggleProfileMenu}>
+              <h6>{username ? username.slice(0, 2).toUpperCase() : "U"}</h6>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {showNotify && <NotifyWrapper onClose={toggleNotify} />}
+
+      {showProfileMenu && (
+        <div className="profile-menu">
+          <div className="profile-menu-item" onClick={handleSettingsClick}>
+            <FaCog /> Settings
+          </div>
+          <div className="profile-menu-item" onClick={handleLogout}>
+            <FaSignOutAlt /> Logout
+          </div>
+          <MdClose className="close-icon" onClick={toggleProfileMenu} />
         </div>
       )}
-    </div>
+
+      {showProfile && <Profile username={username} onClose={() => setShowProfile(false)} />}
     </header>
   );
 };

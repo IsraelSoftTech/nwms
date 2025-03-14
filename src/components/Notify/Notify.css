@@ -1,0 +1,106 @@
+.notify-box {
+    position: absolute;
+    top: 80px; /* Adjust based on your layout */
+    right: 10px;
+    width: 300px;
+    background: white; /* Ensure the background is white */
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    animation: slideDown 0.3s ease;
+    border-top-left-radius: 0; /* Adjust to connect with the bell */
+    border-top-right-radius: 0; /* Adjust to connect with the bell */
+    height: 1000px;
+  }
+  
+  .notify-box::before {
+    content: '';
+    position: absolute;
+    top: -10px; /* Position it above the notification box */
+    right: 87px; /* Adjust based on the bell's position */
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent; /* Adjust size */
+    border-right: 10px solid transparent; /* Adjust size */
+    border-bottom: 10px solid #fe7235; /* Match with the background */
+    z-index: 999; /* Make sure it's behind the notification box */
+  }
+  
+  .bell {
+    cursor: pointer;
+    transition: background 0.3s ease; /* Smooth transition for background */
+  }
+  
+  .bell.active {
+    background: #ccc; /* Background color when active */
+    border-radius: 50%; /* Make it circular */
+    padding: 3px;
+  }
+  
+  .notify-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background: #fe7235;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    color:#fff
+
+  }
+  .notify-header h3{
+    color:#fff
+  }
+  
+  .notify-list {
+    padding: 0; /* Remove padding */
+    max-height: 200px; /* Adjust height for scrolling */
+  }
+  
+  .scrollable {
+    overflow-y: auto; /* Enable vertical scrolling */
+  }
+  
+  .notify-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #eaeaea;
+  }
+  
+  .notify-item:last-child {
+    border-bottom: none;
+  }
+  
+  .notify-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .notify-content {
+    flex: 1;
+  }
+  
+  .settings-icon {
+    cursor: pointer;
+    font-size: 20px;
+  }
+  
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @media (max-width: 768px) {
+    .notify-box::before{
+        right: 70px; /* Adjust based on the bell's position */
+        
+    }
+  }
