@@ -1,5 +1,6 @@
-.loader {
+.loader-container {
     display: flex;
+    flex-direction: column; /* Stack loader and text vertically */
     justify-content: center;
     align-items: center;
     height: 100vh; /* Full height for centering */
@@ -9,6 +10,12 @@
     top: 0;
     left: 0;
     z-index: 9999; /* Ensure it's on top of everything */
+  }
+  
+  .loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   
   .dot {
@@ -25,13 +32,13 @@
   }
   
   #middle-dot {
-    background-color: black;
+    background-color: #0061FD;
     animation: none; /* No animation needed */
   }
   
   #right-dot {
     background-color: #FE7235;
-    animation: load-right 2s forwards; /* Keep the final state */
+    animation: load-right 4s forwards; /* Keep the final state */
   }
   
   @keyframes load-left {
@@ -48,4 +55,11 @@
     30% { transform: translateX(0); }
     40% { transform: translateX(-10px); }
     100% { opacity: 0; }
+  }
+  
+  .loader-text {
+    margin-top: 20px; /* Space between the dots and the text */
+    font-size: 16px;
+    color: #333; /* Text color */
+    text-align: center; /* Center the text */
   }

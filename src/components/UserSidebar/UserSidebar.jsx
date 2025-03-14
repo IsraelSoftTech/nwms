@@ -1,16 +1,28 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { MdDashboard } from "react-icons/md";
 import { FaRegFileAlt, FaRegCalendarAlt, FaHome, FaGraduationCap } from "react-icons/fa";
 import logo from "../../assets/logo.png";
+import Loader from "../Loader"; // Import the Loader component
 import "./UserSidebar.css";
-
 
 const UserSidebar = ({ isSidebarOpen }) => {
   const location = useLocation();
-  
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const handleStart = () => setLoading(true);
+    const handleComplete = () => {
+      setTimeout(() => setLoading(false), 2000); // Show loader for 2 seconds
+    };
+
+    handleStart();
+    handleComplete();
+  }, [location]);
+
   return (
     <div>
+      {loading && <Loader />} {/* Show Loader when loading is true */}
       <aside className={`sidebar ${isSidebarOpen ? "active" : ""}`}>
         <div className="logo">
           <span className="logo-icon">

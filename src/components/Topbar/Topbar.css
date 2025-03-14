@@ -1,192 +1,192 @@
 /* Positioning the topbar */
 .topbar {
-    position: fixed;
-    top:0;
-    width: 83%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 15px;
-    background: white;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Styling the search box */
-  .search-box {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    border: 1px solid #ddd;
-    padding: 5px 10px;
-    border-radius: 5px;
-  }
-  
-  .search-box input {
-    border: none;
-    outline: none;
-    font-size: 14px;
-  }
-  
-  /* Top icons container */
-  .top-icons {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    position: relative;
-  }
-  
-  /* Styling the bell icon */
-  .icon1.bell {
-    position: relative;
-    font-size: 24px; /* Adjust size if needed */
-  }
-  
-  /* Notification badge positioning */
-  .notification-badge{
-    background: #FE7235;
-    padding: 10px;
-    margin-left: -25px;
-    margin-top: -20px;
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  /* Profile container */
-  .profile-container-text {
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Evenly spread soft shadow */
-    background: #fff;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    border-radius: 50%;
-    font-weight: bold;
-  }
-  .profile-container-text h6{
-    text-align: center;
-  }
-  /* Mobile view adjustments */
-  @media (max-width: 768px) {
-  
-    .topbar{
+  position: fixed;
+  top:0;
+  width: 83%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  background: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Styling the search box */
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  border: 1px solid #ddd;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.search-box input {
+  border: none;
+  outline: none;
+  font-size: 14px;
+}
+
+/* Top icons container */
+.top-icons {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  position: relative;
+}
+
+/* Styling the bell icon */
+.icon1.bell {
+  position: relative;
+  font-size: 24px; /* Adjust size if needed */
+}
+
+/* Notification badge positioning */
+.notification-badge{
+  background: #FE7235;
+  padding: 10px;
+  margin-left: -25px;
+  margin-top: -20px;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Profile container */
+.profile-container-text {
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Evenly spread soft shadow */
+  background: #fff;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 50%;
+  font-weight: bold;
+}
+.profile-container-text h6{
+  text-align: center;
+}
+/* Mobile view adjustments */
+@media (max-width: 768px) {
+
+  .topbar{
 width: 100%;
 left: 0;
-    }
-    
-    .bell{
-        font-size: 35px;
-      }
-      .notification-badge{
-      font-size: 1px;
-      width: 1px;
-      height: 1px;
-      padding: 3px;
-      margin-left: -20px;
-      }
-    .topbar h1 {
-      font-size: 18px;
-      flex-grow: 1; /* Push icons to the right */
-    }
-  
-    .search-box {
-      display: none; /* Hide search on mobile */
-    }
-  
-    .top-icons {
-      gap: 10px; /* Reduce gap between icons */
-    }
   }
   
+  .bell{
+      font-size: 35px;
+    }
+    .notification-badge{
+    font-size: 1px;
+    width: 1px;
+    height: 1px;
+    padding: 3px;
+    margin-left: -20px;
+    }
+  .topbar h1 {
+    font-size: 18px;
+    flex-grow: 1; /* Push icons to the right */
+  }
 
-  /* ---------------------------------------------------------- */
-  /* Mobile search icon (hidden by default) */
+  .search-box {
+    display: none; /* Hide search on mobile */
+  }
+
+  .top-icons {
+    gap: 10px; /* Reduce gap between icons */
+  }
+}
+
+
+/* ---------------------------------------------------------- */
+/* Mobile search icon (hidden by default) */
 .mobile-search-icon {
-  display: none;
-  font-size: 29px;
-  cursor: pointer;
-  font-weight: 500;
+display: none;
+font-size: 29px;
+cursor: pointer;
+font-weight: 500;
 
 }
 
 /* Show mobile search icon only on small screens */
 @media (max-width: 768px) {
-  .mobile-search-icon {
-    display: block;
-  }
+.mobile-search-icon {
+  display: block;
+}
 
-  .search-box {
-    display: none; /* Hide large search box on mobile */
-  }
+.search-box {
+  display: none; /* Hide large search box on mobile */
+}
 
-  .top-icons {
-    gap: 10px; /* Reduce spacing between icons */
-  }
+.top-icons {
+  gap: 10px; /* Reduce spacing between icons */
+}
 }
 /* ------------------------------------------------------------ */
 /* Topbar styling */
 .topbar-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 5px;
-  height: 50px;
-  background-color: #fff;
-  transition: all 0.3s ease-in-out;
- 
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 5px;
+height: 50px;
+background-color: #fff;
+transition: all 0.3s ease-in-out;
+
 }
 
 /* Search bar styles (Hidden by Default) */
 .search-bar {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: #f0f0f0;
-  padding: 6px;
-  height: 39px;
-  border-radius: 4px;
+width: 100%;
+display: flex;
+align-items: center;
+justify-content: space-between;
+background-color: #f0f0f0;
+padding: 6px;
+height: 39px;
+border-radius: 4px;
 }
 
 .search-bar input {
-  flex: 1;
-  padding: 8px;
-  border: none;
-  outline: none;
-  background: transparent;
-  font-size: 16px;
+flex: 1;
+padding: 8px;
+border: none;
+outline: none;
+background: transparent;
+font-size: 16px;
 }
 
 /* Close icon */
 .close-icon {
-  font-size: 24px;
-  cursor: pointer;
+font-size: 24px;
+cursor: pointer;
 }
 
 /* Mobile-specific styling */
 @media (max-width: 768px) {
-  .top-icons {
-    display: flex;
-    align-items: center;
-    width: 100%;
-  }
-  .topbar-container{
-    height: 50px;
-  }
+.top-icons {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.topbar-container{
+  height: 50px;
+}
 
-  /* Hide topbar when search is active */
-  .search-active .top-icons {
-    display: none;
-  }
+/* Hide topbar when search is active */
+.search-active .top-icons {
+  display: none;
+}
 
-  /* Show search bar when active */
-  .search-active .search-bar {
-    display: flex;
-  }
+/* Show search bar when active */
+.search-active .search-bar {
+  display: flex;
+}
 }

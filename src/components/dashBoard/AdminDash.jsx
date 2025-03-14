@@ -20,7 +20,7 @@ import Users from "../users/Users";
 //import users
 import { getDatabase, ref, onValue } from "firebase/database";
 import firebaseApp from "../../firebaseConfig";
-import CustomAreaChart from "../recharts/CustomAreaChart";
+
 
 import Sidebar from "../Sidebar/Sidebar";
 import Topbar from "../Topbar/Topbar";
@@ -85,7 +85,7 @@ const AdminDash = () => {
           <EduContent />
           <div className="graph-box">
             <div className="graph-placeholder">
-              <CustomAreaChart />
+         
             </div>
           </div>
         </section>
