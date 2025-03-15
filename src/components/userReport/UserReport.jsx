@@ -18,6 +18,7 @@ const UserReport = () => {
     date: "",
     user: "",
     image: null,
+    googleMapLink: "" // New field for Google Map Link
   });
   const [submittedReports, setSubmittedReports] = useState([]);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
@@ -36,10 +37,19 @@ const UserReport = () => {
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: name === "image" ? files[0] : value,
-    }));
+    setFormData((prev) => {
+      const newFormData = {
+        ...prev,
+        [name]: name === "image" ? files[0] : value,
+      };
+
+      // Generate Google Map Link when location changes
+      if (name === "location") {
+        newFormData.googleMapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(value)}`;
+      }
+
+      return newFormData;
+    });
   };
 
   const handleSubmit = (e) => {
@@ -64,6 +74,7 @@ const UserReport = () => {
           date: "",
           user: "",
           image: null,
+          googleMapLink: "", // Reset the Google Map Link as well
         });
         // Reset file input
         document.querySelector('input[type="file"]').value = "";
@@ -124,6 +135,9 @@ const UserReport = () => {
 
               <label><h4>Location:</h4></label>
               <input type="text" name="location" placeholder="Enter location" onChange={handleChange} required />
+
+              <label><h4>Google Map Link:</h4></label>
+              <input type="text" name="googleMapLink" value={formData.googleMapLink} readOnly /> {/* Autofilled link */}
 
               <label><h4>Date:</h4></label>
               <input type="date" name="date" onChange={handleChange} required />

@@ -10,6 +10,7 @@ import UserReport from "./components/userReport/UserReport";
 import UserEdu from "./components/UserEdu/UserEdu";
 import AdminLegal from "./components/AdminLegal/AdminLegal";
 import AllWords from "./components/AllWords";
+import Landing from "./components/Landing/Landing";
 
 function App() {
   const firebaseUrl = "https://register-d6145-default-rtdb.firebaseio.com/users.json";
@@ -69,7 +70,8 @@ function App() {
     <Router>
       <Routes>
         
-        <Route path="/" element={<SignIn />} />
+        <Route path="/" element={<Landing />} />
+        <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/admin-dashboard" element={<AdminDash />} />
         <Route path="/user-dashboard" element={<UserDash />} />

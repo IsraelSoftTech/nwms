@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./SignUp.css";
 import logo from "../../assets/logo.png";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+
 import { FcGoogle } from "react-icons/fc";
 
 const firebaseUrl = "https://register-d6145-default-rtdb.firebaseio.com/users.json";
@@ -50,7 +50,7 @@ const SignUp = () => {
       if (response.ok) {
         setMessage("Account Created Successfully! Redirecting...");
         setTimeout(() => {
-          navigate("/");
+          navigate("/signin");
         }, 2000);
       } else {
         setMessage("Sign-up failed! Try again.");
@@ -95,7 +95,7 @@ const SignUp = () => {
           <button className="signup-btn" disabled={loading}>Sign Up</button>
         </form>
 
-        <p>Already have an account? <Link to="/" style={{color:"#408AFD",textDecoration:"none"}}>Sign In</Link></p>
+        <p>Already have an account? <Link to="/signin" style={{color:"#408AFD",textDecoration:"none"}}>Sign In</Link></p>
       </div>
     </div>
   );
