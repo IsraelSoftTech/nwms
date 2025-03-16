@@ -4,6 +4,7 @@ import { FaBell, FaCog, FaSignOutAlt } from "react-icons/fa";
 import NotifyWrapper from "../Notify/Notify"; // Import Notify component
 import Profile from "../profile"; // Import Profile component
 import { useNavigate } from "react-router-dom"; // Import useNavigate for redirecting
+import Loader from "../Loader"; // Import Loader component
 import "./Topbar.css";
 
 const Topbar = () => {
@@ -11,6 +12,7 @@ const Topbar = () => {
   const [showNotify, setShowNotify] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
+  const [loading, setLoading] = useState(false); // State for loading
   const username = localStorage.getItem("username"); // Get username from localStorage
   const navigate = useNavigate();
 
@@ -23,14 +25,22 @@ const Topbar = () => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("username");
-    navigate("/"); // Redirect to SignIn page
+    setLoading(true); // Show loader immediately
+    setTimeout(() => {
+      localStorage.removeItem("username");
+      navigate("/signin"); // Redirect to SignIn page
+      setLoading(false); // Hide loader after navigation
+    }, 1500); // Simulate loading delay
   };
 
   const handleSettingsClick = () => {
     setShowProfile(true);
     setShowProfileMenu(false); // Close profile menu on settings click
   };
+
+  if (loading) {
+    return <Loader />; // Show loader if loading state is true
+  }
 
   return (
     <header className="topbar">

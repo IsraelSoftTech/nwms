@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./SignUp.css";
-import logo from "../../assets/logo.png";
-
 import { FcGoogle } from "react-icons/fc";
+import Loader from "../Loader"; // Import the Loader component
 
 const firebaseUrl = "https://register-d6145-default-rtdb.firebaseio.com/users.json";
 
@@ -25,7 +24,7 @@ const SignUp = () => {
 
   const handleSignUp = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    setLoading(true); // Show loader immediately
     setMessage("");
 
     if (formData.password !== formData.confirm_password) {
@@ -50,22 +49,35 @@ const SignUp = () => {
       if (response.ok) {
         setMessage("Account Created Successfully! Redirecting...");
         setTimeout(() => {
+          setLoading(false);
           navigate("/signin");
         }, 2000);
       } else {
         setMessage("Sign-up failed! Try again.");
+        setLoading(false);
       }
     } catch (error) {
       setMessage("An error occurred. Try again later.");
+      setLoading(false);
     }
-
-    setLoading(false);
   };
+
+  const handleSignInRedirect = (e) => {
+    e.preventDefault(); // Prevent default link behavior
+    setLoading(true); // Show loader immediately
+    setTimeout(() => {
+      navigate("/signin"); 
+      setLoading(false);
+    }, 1500); // Give some time for the loader to show
+  };
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <div className="container">
       <div className="head-items">
-        <img src={logo} alt="" />
         <h2>Waste Management Application</h2>
       </div>
 
@@ -75,27 +87,58 @@ const SignUp = () => {
           <FcGoogle style={{ fontSize: "35px" }} />
           Continue with Google Authenticate
         </button>
-        <p className="or-text" style={{color:"#FE7235"}}>Or</p>
+        <p className="or-text" style={{ color: "#FE7235" }}>Or</p>
 
         {message && <p className="message">{message}</p>}
 
         <form onSubmit={handleSignUp}>
           <label>*Username</label>
-          <input className="int"  type="text" name="username" placeholder="Enter Username" onChange={handleChange} required />
+          <input
+            className="int"
+            type="text"
+            name="username"
+            placeholder="Enter Username"
+            onChange={handleChange}
+            required
+          />
 
           <label>*Email</label>
-          <input className="int"  type="email" name="email" placeholder="Enter Email" onChange={handleChange} required />
+          <input
+            className="int"
+            type="email"
+            name="email"
+            placeholder="Enter Email"
+            onChange={handleChange}
+            required
+          />
 
           <label>*Password</label>
-          <input className="int"  type="password" name="password" placeholder="Enter Password" onChange={handleChange} required />
+          <input
+            className="int"
+            type="password"
+            name="password"
+            placeholder="Enter Password"
+            onChange={handleChange}
+            required
+          />
 
           <label>*Confirm Password</label>
-          <input className="int"  type="password" name="confirm_password" placeholder="Repeat Password" onChange={handleChange} required />
+          <input
+            className="int"
+            type="password"
+            name="confirm_password"
+            placeholder="Repeat Password"
+            onChange={handleChange}
+            required
+          />
 
           <button className="signup-btn" disabled={loading}>Sign Up</button>
         </form>
 
-        <p>Already have an account? <Link to="/signin" style={{color:"#408AFD",textDecoration:"none"}}>Sign In</Link></p>
+        <p>
+          Already have an account?{" "}
+          <Link to="/signin" onClick={handleSignInRedirect} style={{ color: "#408AFD", textDecoration: "none" }}>Sign In</Link>
+        </p>
       </div>
     </div>
   );

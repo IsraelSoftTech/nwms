@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { MdDashboard } from "react-icons/md";
-import { FaRegFileAlt, FaRegCalendarAlt, FaHome, FaGraduationCap } from "react-icons/fa";
+import { FaRegFileAlt, FaRegCalendarAlt, FaHome, FaGraduationCap, FaBan } from "react-icons/fa";
 import logo from "../../assets/logo.png";
 import Loader from "../Loader"; // Import the Loader component
 import "./UserSidebar.css";
@@ -62,6 +62,14 @@ const UserSidebar = ({ isSidebarOpen }) => {
               <FaGraduationCap className="icon1" /> Education
             </Link>
           </li>
+          <li>
+            <Link 
+              to="/user-legal" 
+              className={`link ${location.pathname === "/user-legal" ? "active" : ""}`}
+            >
+              <FaBan className="icon1" /> Illegal
+            </Link>
+          </li>
         </ul>
       </aside>
 
@@ -82,6 +90,10 @@ const UserSidebar = ({ isSidebarOpen }) => {
         <Link to="/user-edu" className="mobile-nav-icon">
           <FaGraduationCap style={{ color: location.pathname === "/user-edu" ? "#FE7235" : "black" }} />
           <span>Education</span>
+        </Link>
+        <Link to="/user-legal" className="mobile-nav-icon">
+          <FaBan style={{ color: location.pathname === "/user-legal" ? "#FE7235" : "black" }} />
+          <span>Illegal</span>
         </Link>
       </nav>
     </div>
