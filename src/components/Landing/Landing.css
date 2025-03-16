@@ -28,7 +28,7 @@
 
 .sign-in-btn,
 .sign-up-btn {
-  background-color: #0061FE;
+  background-color: #FE7235;
   color: white;
   border: none;
   padding: 20px;
@@ -45,7 +45,7 @@
 
 .sign-in-btn:hover,
 .sign-up-btn:hover {
-  background-color: #0756d6; /* Darker blue */
+  background-color: #f76425; /* Darker blue */
 }
 
 .image-container {
