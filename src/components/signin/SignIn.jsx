@@ -92,6 +92,8 @@ const SignIn = () => {
     }, 1500);
   };
 
+  const isButtonDisabled = !formData.username || !formData.password;
+
   if (loading) {
     return <Loader />;
   }
@@ -138,7 +140,13 @@ const SignIn = () => {
             </span>
           </div>
 
-          <button className="signin-btn" disabled={loading}>Sign In</button>
+          <button 
+            className="signin-btn" 
+            disabled={loading} 
+            style={{ background: isButtonDisabled ? 'grey' : '#FE7235' }}
+          >
+            Sign In
+          </button>
         </form>
 
         <p className="forgot-password" onClick={handleForgotPassword}>Forgot Password?</p>

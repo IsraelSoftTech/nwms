@@ -2,28 +2,28 @@
   text-align: center;
   padding: 0; /* Remove padding to avoid scrolling */
   background-color: white;
+  height: 100vh; /* Set height to full viewport height */
+  overflow: hidden; /* Prevent scrolling */
 }
 
 .landing-content {
   margin-bottom: 5px;
+  position: relative; /* Allow positioning of children */
+  z-index: 1; /* Ensure content is above images */
 }
 
 .landing-content h1 {
   background: #fff;
   padding: 10px;
-  position: fixed;
-  top: 0;
-  left: 0;
   width: 100%;
-  margin-bottom: 0; /* No margin to avoid scrolling */
+  margin: 0; /* No margin to avoid scrolling */
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   font-size: 24px;
   color: black; /* Orange color */
-  z-index: 1; /* Ensure the header is above images */
 }
 
 .button-container {
-  margin:20px; /* Adjusted margin */
+  margin: 20px; /* Adjusted margin */
 }
 
 .sign-in-btn,
@@ -38,11 +38,11 @@
   font-size: 16px;
   width: 200px;
 }
-.logo-land{
 
-  
+.logo-land {
   width: 200px;
 }
+
 .sign-in-btn:hover,
 .sign-up-btn:hover {
   background-color: #0756d6; /* Darker blue */
@@ -52,18 +52,18 @@
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  margin-top: 50px;
+  margin-top: 20px; /* Reduced margin */
 }
 
 .full-width-image {
   width: 100%;
-  
-  max-width:1500px;
-  height: 700px;
-
-  margin: 10px; /* No margin */
+  max-width: 1500px;
+  height: auto; /* Maintain aspect ratio */
+  max-height: calc(100vh - 150px); /* Ensure it fits within the viewport */
+  margin: 0; /* No margin */
 }
-.mobile-pict{
+
+.mobile-pict {
   display: none;
 }
 
@@ -81,13 +81,12 @@
 
   .image-container {
     flex-direction: column;
-    overflow-x: hidden;
-    margin-right:5px ;
-    height: 100%;
+    overflow: hidden; /* Prevent internal vertical scrolling */
+    height: auto; /* Ensure it fits within the viewport */
   }
-
 
   .full-width-image {
     max-width: 100%;
+    height: auto; /* Maintain aspect ratio */
   }
 }
