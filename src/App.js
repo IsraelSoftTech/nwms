@@ -4,13 +4,14 @@ import SignIn from "./components/signin/SignIn";
 import SignUp from "./components/signup/SignUp";
 import UserDash from "./components/userDash/UserDash";
 import AdminDash from "./components/dashBoard/AdminDash";
-import Schedule from "./components/Schedule/Schedule";
+
 import AdminReport from "./components/AdminReport/AdminReport";
 import UserReport from "./components/userReport/UserReport";
 import UserEdu from "./components/UserEdu/UserEdu";
 import AdminLegal from "./components/AdminLegal/AdminLegal";
 import AllWords from "./components/AllWords";
 import Landing from "./components/Landing/Landing";
+import AdminSchedule from "./components/AdminSchedule/AdminSchedule";
 
 function App() {
   const firebaseUrl = "https://register-d6145-default-rtdb.firebaseio.com/users.json";
@@ -76,10 +77,11 @@ function App() {
         <Route path="/admin-dashboard" element={<AdminDash />} />
         <Route path="/user-dashboard" element={<UserDash />} />
         <Route path="/admin-report" element={<AdminReport />} />
-        <Route path="/admin-schedule" element={<Schedule />} />
+       
         <Route path="/user-report" element={<UserReport />} />
         <Route path="/user-edu" element={<UserEdu />} />
         <Route path="/admin-legal" element={<AdminLegal />} />
+        <Route path="/admin-schedule" element={<AdminSchedule />} />
       </Routes>
     </Router>
     </div>

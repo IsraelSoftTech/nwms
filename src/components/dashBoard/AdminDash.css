@@ -19,33 +19,46 @@
   font-size: 30px;
 }
 .icon2 {
-  background: #e2e4e3;
-  color: rgb(77, 76, 76);
-  padding: 7px;
-  font-size: 40px;
+  background: #e5e5e5;
+  font-weight: 100;
+  color: black;
+  padding: 12px;
+  font-size: 55px;
   border-radius: 50%;
   overflow: visible;
 }
 
 .stat-card {
+  display: flex;
+  justify-content: left;
+align-items: center;
+  gap:40px;
   background: #ffffff;
   color: black;
-  padding: 15px;
+  padding: 35px;
+ 
   border-radius: 4px;
   flex: 1;
   text-align: center;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Evenly spread soft shadow */
 }
+.card-count{
+  display: grid;
+  justify-content: center;
+  align-items: center;
+}
 .stat-card p {
   text-align: center;
   color: black;
 }
-.stat-card h3 {
+.stat-card p {
   text-align: center;
   color: black;
 }
 
 .stats-section {
+  justify-content: center;
+
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   margin-top: 70px;

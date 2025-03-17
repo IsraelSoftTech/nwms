@@ -3,8 +3,8 @@ import { FaRegFileAlt, FaTruckPickup } from "react-icons/fa";
 
 import { FiUsers } from "react-icons/fi";
 
-import "./AdminDash.css";
-import ws1 from "../../assets/ws1.jpeg";
+import "./AdminSchedule.css";
+
 
 import {
   Chart as ChartJS,
@@ -14,8 +14,8 @@ import {
   LineElement,
   Tooltip,
 } from "chart.js";
-import EduContent from "../EduContent/EduContent";
-import Users from "../users/Users";
+
+
 
 //import users
 import { getDatabase, ref, onValue } from "firebase/database";
@@ -23,6 +23,8 @@ import firebaseApp from "../../firebaseConfig";
 
 
 import Sidebar from "../Sidebar/Sidebar";
+
+
 import Topbar from "../Topbar/Topbar";
 
 // Register necessary Chart.js components
@@ -35,7 +37,7 @@ ChartJS.register(
 );
 //abreviate username text
 
-const AdminDash = () => {
+const AdminSchedule = () => {
   //Count users
   const [userCount, setUserCount] = useState(0);
 
@@ -60,7 +62,7 @@ const AdminDash = () => {
 
       {/* Main Content */}
       <main className="main-content">
-        <Topbar />
+     <Topbar/>
 
         <section className="stats-section">
           <div className="stat-card" >
@@ -88,32 +90,19 @@ const AdminDash = () => {
           </div>
         </section>
 
-        {/* Educational Content */}
-        <section className="content-section">
-          <EduContent />
-          <div className="graph-box">
-            <div className="graph-placeholder">
-         
-            </div>
-          </div>
-        </section>
+     
 
         {/* User and Dump Site */}
 
         <section className="user-illegal">
-          <div className="newUser" style={{ overflowY: "hidden" }}>
-            {" "}
-            <Users />
-          </div>
+         
 
       
           {/* -------------------------------------------------------------------- */}
 <div className="user-box-img">
      
            
-     <div className="waste-img">
-       <img src={ws1} alt=""/>
-     </div>
+    
      
      </div>
   
@@ -128,4 +117,4 @@ const AdminDash = () => {
   );
 };
 
-export default AdminDash;
+export default AdminSchedule;

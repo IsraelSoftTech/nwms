@@ -67,7 +67,7 @@ const Topbar = () => {
               onClick={toggleNotify} style={{ cursor: "pointer" }}
             />
             <div className="notification-badge">1</div>
-            <div className="profile-container-text" onClick={toggleProfileMenu}>
+            <div className="profile-container-text" onClick={toggleProfileMenu} style={{cursor:"pointer"}}>
               <h6>{username ? username.slice(0, 2).toUpperCase() : "U"}</h6>
             </div>
           </div>
