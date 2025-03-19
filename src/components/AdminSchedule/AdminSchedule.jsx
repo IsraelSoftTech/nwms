@@ -25,7 +25,8 @@ import firebaseApp from "../../firebaseConfig";
 import Sidebar from "../Sidebar/Sidebar";
 
 
-import Topbar from "../Topbar/Topbar";
+
+import TopNew from "../TopNew/TopNew";
 
 // Register necessary Chart.js components
 ChartJS.register(
@@ -62,7 +63,7 @@ const AdminSchedule = () => {
 
       {/* Main Content */}
       <main className="main-content">
-     <Topbar/>
+    <TopNew/>
 
         <section className="stats-section">
           <div className="stat-card" >

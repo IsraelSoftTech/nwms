@@ -24,6 +24,7 @@ import firebaseApp from "../../firebaseConfig";
 
 import Sidebar from "../Sidebar/Sidebar";
 import Topbar from "../Topbar/Topbar";
+import CustomAreaChart from "../recharts/CustomAreaChart";
 
 // Register necessary Chart.js components
 ChartJS.register(
@@ -93,7 +94,7 @@ const AdminDash = () => {
           <EduContent />
           <div className="graph-box">
             <div className="graph-placeholder">
-         
+         <CustomAreaChart/>
             </div>
           </div>
         </section>

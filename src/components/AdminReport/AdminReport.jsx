@@ -45,33 +45,45 @@ const AdminReport = () => {
         <section className="stats-section">
           <div className="stat-card">
             <BsExclamationTriangle className="icon2" />
-            <h3>Illegal Dumpsites</h3>
+            <div className="card-count">
+            <p>Illegal Dumpsites</p>
             <p>21</p>
+            </div>
           </div>
           <div className="stat-card">
             <FaTruckPickup className="icon2" />
-            <h3>Missed Reports</h3>
+            <div className="card-count">
+            <p>Missed Reports</p>
             <p>12</p>
+            </div>
           </div>
           <div className="stat-card">
             <FaTrash className="icon2" />
-            <h3>Overflowing Dumpsites</h3>
+            <div className="card-count">
+            <p>Overflowing Dumpsites</p>
             <p>10</p>
+            </div>
           </div>
           <div className="stat-card">
             <FaTimesCircle className="icon2" />
-            <h3>Unresolved Reports</h3>
+            <div className="card-count">
+            <p>Unresolved Reports</p>
             <p>10</p>
+            </div>
           </div>
           <div className="stat-card">
             <FaSpinner className="icon2" />
-            <h3>In-Progress Reports</h3>
+            <div className="card-count">
+            <p>In-Progress Reports</p>
             <p>10</p>
+            </div>
           </div>
           <div className="stat-card">
             <FaCheckCircle className="icon2" />
-            <h3>Resolved Reports</h3>
+            <div className="card-count">
+            <p>Resolved Reports</p>
             <p>10</p>
+            </div>
           </div>
         </section>
 
