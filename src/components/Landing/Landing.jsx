@@ -39,7 +39,7 @@ const Landing = () => {
         </div>
         
         <div className="nav-center">
-          <a href="#read">Read More</a>
+          <a href="https://www.epa.gov/recycle/reducing-waste-what-you-can-do" target="_blank">Read More</a>
          
         </div>
         
