@@ -48,7 +48,86 @@ button:hover {
   left: 10%;
   animation: slide-in 1s forwards, slide-out 1s forwards 2s; /* Animation */
 }
+/* -------------------------------------------------------------------------------------- */
+.report-status-table {
+  width: 100%;
+  overflow-x: auto;
+  background: white;
+  border-radius: 8px;
+  padding: 1rem;
+}
 
+.report-status-table table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px;
+}
+
+.report-status-table th {
+  text-align: left;
+  padding: 1rem;
+  font-weight: 500;
+  color: #333;
+  border-bottom: 1px solid #eee;
+}
+
+.report-status-table td {
+  padding: 1rem;
+  color: #666;
+}
+
+.report-status-table tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+.status-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.status-icon svg {
+  font-size: 1.25rem;
+}
+
+.status-icon.viewed svg {
+  color: #22C55E;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .report-status-table {
+    padding: 0.5rem;
+  }
+
+  .report-status-table th,
+  .report-status-table td {
+    padding: 0.75rem;
+  }
+
+  .status-icon svg {
+    font-size: 1rem;
+  }
+}
+
+/* Add horizontal scroll indicator for mobile */
+@media (max-width: 640px) {
+  .report-status-table {
+    position: relative;
+  }
+
+  .report-status-table::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 40px;
+    height: 100%;
+    background: linear-gradient(to right, transparent, rgba(255,255,255,0.9));
+    pointer-events: none;
+  }
+}
+/* -------------------------------------------------------------------------------------- */
 @keyframes slide-in {
   from {
     transform: translateX(-100%);

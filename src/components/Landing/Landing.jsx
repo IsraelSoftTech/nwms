@@ -32,14 +32,14 @@ const Landing = () => {
       <nav className="navbar">
         <div className="logo-container">
           <div className="logo">
-            <span className="logo-w"><img src={logo}/></span>
+            <span className="logo-w"><img src={logo} alt=""/></span>
            
           </div>
           <h1>Waste Manager</h1>
         </div>
         
         <div className="nav-center">
-          <a href="https://www.epa.gov/recycle/reducing-waste-what-you-can-do" target="_blank">Read More</a>
+          <a href="#read" target="_blank">Read More</a>
          
         </div>
         

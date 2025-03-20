@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FaRegFileAlt, FaCheckCircle, FaTruckPickup, FaSpinner, FaPaperPlane } from "react-icons/fa";
+import { FaRegFileAlt, FaCheckCircle, FaTruckPickup, FaSpinner, FaPaperPlane, FaTimesCircle } from "react-icons/fa";
 import { getDatabase, ref, set, onValue } from "firebase/database";
 
 import ws1 from "../../assets/ws1.jpeg";
@@ -22,10 +22,12 @@ const UserReport = () => {
   });
   const [submittedReports, setSubmittedReports] = useState([]);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [viewedReports, setViewedReports] = useState({});
 
   const db = getDatabase();
 
   useEffect(() => {
+    // Fetch submitted reports
     const reportsRef = ref(db, 'submittedReports/');
     onValue(reportsRef, (snapshot) => {
       const data = snapshot.val();
@@ -33,23 +35,44 @@ const UserReport = () => {
         setSubmittedReports(Object.values(data));
       }
     });
+
+    // Fetch viewed reports
+    const viewedRef = ref(db, 'viewedReports/');
+    onValue(viewedRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        setViewedReports(data);
+      }
+    });
   }, [db]);
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-    setFormData((prev) => {
-      const newFormData = {
-        ...prev,
-        [name]: name === "image" ? files[0] : value,
+    
+    if (name === "image" && files[0]) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData(prev => ({
+          ...prev,
+          image: reader.result // This will be the base64 string
+        }));
       };
+      reader.readAsDataURL(files[0]);
+    } else {
+      setFormData((prev) => {
+        const newFormData = {
+          ...prev,
+          [name]: value,
+        };
 
-      // Generate Google Map Link when location changes
-      if (name === "location") {
-        newFormData.googleMapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(value)}`;
-      }
+        // Generate Google Map Link when location changes
+        if (name === "location") {
+          newFormData.googleMapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(value)}`;
+        }
 
-      return newFormData;
-    });
+        return newFormData;
+      });
+    }
   };
 
   const handleSubmit = (e) => {
@@ -95,18 +118,24 @@ const UserReport = () => {
           {/* Stat Cards */}
           <div className="stat-card">
             <FaRegFileAlt className="icon2" />
-            <h3>Total Reports</h3>
+            <div className="card-count">
+            <p>Total Reports</p>
             <p>{submittedReports.length}</p>
+            </div>
           </div>
           <div className="stat-card">
             <FaTruckPickup className="icon2" />
-            <h3>Pending Pick-ups</h3>
+            <div className="card-count">
+            <p>Pending Pick-ups</p>
             <p>12</p>
+            </div>
           </div>
           <div className="stat-card">
             <FaCheckCircle className="icon2" />
-            <h3>Completed Pick-ups</h3>
+            <div className="card-count">
+            <p>Completed Pick-ups</p>
             <p>10</p>
+            </div>
           </div>
         </section>
 
@@ -160,22 +189,53 @@ const UserReport = () => {
           {/* Report Status */}
           <div className="user-box">
             <h3>Report Status</h3>
-            <div className="status-steps">
-              <div className="step completed">
-                <FaPaperPlane className="status-tract" />
-                <span className="step-number">11</span>
-                <p>Submitted</p>
-              </div>
-              <div className="step in-progress">
-                <FaSpinner className="status-tract" />
-                <span className="step-number">3</span>
-                <p>In Progress</p>
-              </div>
-              <div className="step pending">
-                <FaCheckCircle className="status-tract" />
-                <span className="step-number">7</span>
-                <p>Resolved</p>
-              </div>
+            <div className="report-status-table">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Report ID</th>
+                    <th>Date Submitted</th>
+                    <th>View</th>
+                    <th>Pending</th>
+                    <th>Resolved</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {submittedReports.map((report) => (
+                    <tr key={report.id}>
+                      <td>{report.id}</td>
+                      <td>{report.date}</td>
+                      <td>
+                        <div className="status-icon viewed">
+                          {viewedReports[report.id] ? (
+                            <FaCheckCircle style={{ color: '#22C55E' }} />
+                          ) : (
+                            <FaTimesCircle style={{ color: '#EF4444' }} />
+                          )}
+                        </div>
+                      </td>
+                      <td>
+                        <div className="status-icon pending">
+                          {report.status === 'pending' ? (
+                            <FaCheckCircle style={{ color: '#22C55E' }} />
+                          ) : (
+                            <FaTimesCircle style={{ color: '#EF4444' }} />
+                          )}
+                        </div>
+                      </td>
+                      <td>
+                        <div className="status-icon resolved">
+                          {report.status === 'resolved' ? (
+                            <FaCheckCircle style={{ color: '#22C55E' }} />
+                          ) : (
+                            <FaTimesCircle style={{ color: '#EF4444' }} />
+                          )}
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
           
