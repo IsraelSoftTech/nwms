@@ -24,7 +24,7 @@ const SignIn = () => {
 
   const handleSignIn = async (e) => {
     e.preventDefault();
-    setLoading(true); // Show loader immediately
+    setLoading(true);
     setMessage("");
 
     try {
@@ -37,7 +37,12 @@ const SignIn = () => {
         );
 
         if (userFound) {
-          localStorage.setItem("username", userFound.username);
+          // Store user data in sessionStorage instead of localStorage
+          sessionStorage.setItem("currentUser", JSON.stringify({
+            username: userFound.username,
+            email: userFound.email,
+            image: userFound.image || null
+          }));
           
           setTimeout(() => {
             if (userFound.username === "admin_account") {
@@ -151,7 +156,7 @@ const SignIn = () => {
 
         <p className="forgot-password" onClick={handleForgotPassword}>Forgot Password?</p>
         <p>
-          Don’t have an account?{" "}
+          Don't have an account?{" "}
           <span onClick={handleSignUpRedirect} style={{ color: "#408AFD", cursor: "pointer" }}>
             Sign Up
           </span>

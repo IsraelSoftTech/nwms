@@ -7,32 +7,39 @@ import { useNavigate } from "react-router-dom"; // Import useNavigate for redire
 import Loader from "../Loader"; // Import Loader component
 import "./Topbar.css";
 
+const firebaseUrl = "https://register-d6145-default-rtdb.firebaseio.com/users.json";
+
 const Topbar = () => {
   const [showSearch, setShowSearch] = useState(false);
   const [showNotify, setShowNotify] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
   const [loading, setLoading] = useState(false); // State for loading
-  const [displayUsername, setDisplayUsername] = useState(localStorage.getItem("username") || "");
-  const [profileImage, setProfileImage] = useState(localStorage.getItem("profileImage") || "");
+  const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Update username and profile image when localStorage changes
-    const updateUserInfo = () => {
-      setDisplayUsername(localStorage.getItem("username") || "");
-      setProfileImage(localStorage.getItem("profileImage") || "");
+    const fetchUserData = async () => {
+      try {
+        const currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
+        if (currentUser) {
+          const response = await fetch(firebaseUrl);
+          const users = await response.json();
+          const userFound = Object.values(users).find(user => user.username === currentUser.username);
+          
+          if (userFound) {
+            setUserData({
+              username: userFound.username,
+              image: userFound.image || null
+            });
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
     };
 
-    // Listen for storage changes
-    window.addEventListener('storage', updateUserInfo);
-    
-    // Initial check
-    updateUserInfo();
-
-    return () => {
-      window.removeEventListener('storage', updateUserInfo);
-    };
+    fetchUserData();
   }, []);
 
   const toggleNotify = () => {
@@ -46,7 +53,7 @@ const Topbar = () => {
   const handleLogout = () => {
     setLoading(true); // Show loader immediately
     setTimeout(() => {
-      localStorage.removeItem("username");
+      sessionStorage.removeItem("currentUser");
       navigate("/signin"); // Redirect to SignIn page
       setLoading(false); // Hide loader after navigation
     }, 1500); // Simulate loading delay
@@ -87,9 +94,9 @@ const Topbar = () => {
             />
             <div className="notification-badge">1</div>
             <div className="profile-container-text" onClick={toggleProfileMenu} style={{cursor:"pointer"}}>
-              {profileImage ? (
+              {userData?.image ? (
                 <img 
-                  src={profileImage} 
+                  src={userData.image} 
                   alt="Profile" 
                   style={{
                     width: '100%',
@@ -99,7 +106,7 @@ const Topbar = () => {
                   }}
                 />
               ) : (
-                <h6>{displayUsername ? displayUsername.slice(0, 2).toUpperCase() : "U"}</h6>
+                <h6>{userData?.username ? userData.username.slice(0, 2).toUpperCase() : "U"}</h6>
               )}
             </div>
           </div>
@@ -120,7 +127,7 @@ const Topbar = () => {
         </div>
       )}
 
-      {showProfile && <Profile username={displayUsername} onClose={() => setShowProfile(false)} />}
+      {showProfile && <Profile username={userData?.username} onClose={() => setShowProfile(false)} />}
     </header>
   );
 };

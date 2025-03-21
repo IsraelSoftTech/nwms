@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./profile.css";
 import { FaCamera, FaPen } from "react-icons/fa";
-import {MdClose} from "react-icons/md"
+import { MdClose } from "react-icons/md";
 
 const firebaseUrl = "https://register-d6145-default-rtdb.firebaseio.com/users.json";
 
@@ -32,7 +32,8 @@ const Profile = ({ username, onClose }) => {
             image: currentUser.image || null,
           };
           setProfileData(userData);
-          setOriginalData(userData); // Store original data for comparison
+          setOriginalData(userData);
+          setImagePreview(currentUser.image || null);
         }
       } catch (error) {
         setMessage({ text: "Error fetching user data", type: "error" });
@@ -48,7 +49,7 @@ const Profile = ({ username, onClose }) => {
 
   const handleChange = (e) => {
     setProfileData({ ...profileData, [e.target.name]: e.target.value });
-    setMessage({ text: "", type: "" }); // Clear any existing messages
+    setMessage({ text: "", type: "" });
   };
 
   const handleImageChange = (e) => {
@@ -68,7 +69,7 @@ const Profile = ({ username, onClose }) => {
       reader.onloadend = () => {
         setProfileData(prev => ({
           ...prev,
-          image: reader.result // Store base64 string
+          image: reader.result
         }));
         setImagePreview(reader.result);
       };
@@ -97,7 +98,7 @@ const Profile = ({ username, onClose }) => {
           username: profileData.username,
           email: profileData.email,
           password: profileData.password,
-          image: profileData.image // Store the base64 image string
+          image: profileData.image
         };
 
         const updateResponse = await fetch(`${firebaseUrl.slice(0, -5)}/${userKey}.json`, {
@@ -110,9 +111,13 @@ const Profile = ({ username, onClose }) => {
           throw new Error('Failed to update profile');
         }
 
-        // Update localStorage with new username and profile image
-        localStorage.setItem("username", profileData.username);
-        localStorage.setItem("profileImage", profileData.image || "");
+        // Update sessionStorage with new user data
+        const currentUser = JSON.parse(sessionStorage.getItem("currentUser") || "{}");
+        sessionStorage.setItem("currentUser", JSON.stringify({
+          ...currentUser,
+          username: profileData.username,
+          image: profileData.image
+        }));
         
         setMessage({ text: "Profile updated successfully", type: "success" });
         setOriginalData(profileData);

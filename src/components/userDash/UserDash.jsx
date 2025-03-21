@@ -27,19 +27,25 @@ const UserDash = () => {
 
         <section className="stats-section">
           <div className="stat-card">
-            <FaRegFileAlt className="icon" style={{ color: "rgb(77, 76, 76)", background: "#e2e4e3", padding: "7px", fontSize: "40px", borderRadius: "50%" }} />
-            <h3>Total Reports</h3>
+            <FaRegFileAlt className="icon2" />
+            <div className="card-count">
+            <p>Total Reports</p>
             <p>21</p>
+            </div>
           </div>
           <div className="stat-card">
-            <FaTruckPickup className="icon" style={{ color: "rgb(77, 76, 76)", background: "#e2e4e3", padding: "7px", fontSize: "40px", borderRadius: "50%" }}  />
-            <h3>Pending Pick-ups</h3>
+            <FaTruckPickup className="icon2"  />
+            <div className="card-count">
+            <p>Pending Pick-ups</p>
             <p>12</p>
+            </div>
           </div>
           <div className="stat-card">
-            <FaCheckCircle className="icon" style={{ color: "rgb(77, 76, 76)", background: "#e2e4e3", padding: "7px", fontSize: "40px", borderRadius: "50%" }}  />
-            <h3>Completed Pick-ups</h3>
+            <FaCheckCircle className="icon2" />
+            <div className="card-count">
+            <p>Completed Pick-ups</p>
             <p>10</p>
+            </div>
           </div>
         </section>
 

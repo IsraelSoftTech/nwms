@@ -107,7 +107,7 @@ const AdminReport = () => {
         {showModal && selectedReport && (
           <div className="modal-overlay" onClick={handleCloseModal}>
             <div className="review-modal">
-              <button className="close-button" onClick={() => setShowModal(false)}>
+              <button className="close-modal-button" onClick={() => setShowModal(false)}>
                 <MdClose />
               </button>
               <h2>Review Report</h2>
