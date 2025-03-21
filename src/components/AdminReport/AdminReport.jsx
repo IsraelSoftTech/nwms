@@ -10,6 +10,7 @@ import {
 import { BsExclamationTriangle } from "react-icons/bs";
 import { FiTrash2 } from "react-icons/fi";
 import { getDatabase, ref, onValue, set } from "firebase/database";
+import { MdClose } from "react-icons/md";
 
 import "./AdminReport.css";
 
@@ -106,6 +107,9 @@ const AdminReport = () => {
         {showModal && selectedReport && (
           <div className="modal-overlay" onClick={handleCloseModal}>
             <div className="review-modal">
+              <button className="close-button" onClick={() => setShowModal(false)}>
+                <MdClose />
+              </button>
               <h2>Review Report</h2>
               <div className="report-content">
                 <div className="report-image">

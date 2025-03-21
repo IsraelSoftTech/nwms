@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { MdClose, MdSearch } from "react-icons/md";
 import { FaBell, FaCog, FaSignOutAlt } from "react-icons/fa";
 import NotifyWrapper from "../Notify/Notify"; // Import Notify component
@@ -13,8 +13,27 @@ const Topbar = () => {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
   const [loading, setLoading] = useState(false); // State for loading
-  const username = localStorage.getItem("username"); // Get username from localStorage
+  const [displayUsername, setDisplayUsername] = useState(localStorage.getItem("username") || "");
+  const [profileImage, setProfileImage] = useState(localStorage.getItem("profileImage") || "");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Update username and profile image when localStorage changes
+    const updateUserInfo = () => {
+      setDisplayUsername(localStorage.getItem("username") || "");
+      setProfileImage(localStorage.getItem("profileImage") || "");
+    };
+
+    // Listen for storage changes
+    window.addEventListener('storage', updateUserInfo);
+    
+    // Initial check
+    updateUserInfo();
+
+    return () => {
+      window.removeEventListener('storage', updateUserInfo);
+    };
+  }, []);
 
   const toggleNotify = () => {
     setShowNotify(!showNotify);
@@ -68,7 +87,20 @@ const Topbar = () => {
             />
             <div className="notification-badge">1</div>
             <div className="profile-container-text" onClick={toggleProfileMenu} style={{cursor:"pointer"}}>
-              <h6>{username ? username.slice(0, 2).toUpperCase() : "U"}</h6>
+              {profileImage ? (
+                <img 
+                  src={profileImage} 
+                  alt="Profile" 
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    borderRadius: '50%'
+                  }}
+                />
+              ) : (
+                <h6>{displayUsername ? displayUsername.slice(0, 2).toUpperCase() : "U"}</h6>
+              )}
             </div>
           </div>
         )}
@@ -88,7 +120,7 @@ const Topbar = () => {
         </div>
       )}
 
-      {showProfile && <Profile username={username} onClose={() => setShowProfile(false)} />}
+      {showProfile && <Profile username={displayUsername} onClose={() => setShowProfile(false)} />}
     </header>
   );
 };

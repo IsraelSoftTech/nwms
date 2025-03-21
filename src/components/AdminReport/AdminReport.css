@@ -1,17 +1,3 @@
-
-
-.editDel{
-    display: flex;
-    gap:1px;
-    justify-content: center;
-    align-items: center;
-
-}
-.user-box {
-    text-align: center;
-}
-/* ----------------------------------------------------------------------------------- */
-
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -35,6 +21,30 @@
   max-height: 90vh;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   overflow-y: auto;
+  position: relative;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #FE7235;
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  transition: background-color 0.3s;
+  z-index: 1001;
+}
+
+.close-button:hover {
+  background-color: #e65a1f;
 }
 
 .review-modal h2 {
@@ -207,102 +217,3 @@
     text-align: left;
   }
 }
-
-/* --------------------------------------------------------------------------------------- */
-
-
-/* Ensure full width for mobile screens */
-@media screen and (max-width: 768px) {
-    .dashboard-container {
-      width: 100%;
-      margin: 0;
-    }
-  
-    .sidebar {
-      width: 100%; /* Make sidebar take full width */
-      position: relative; /* Position relative for mobile */
-      display: block; /* Stack the sidebar vertically */
-    }
-  
-    .main-content {
-      width: 100%; /* Ensure main content takes full width */
-      margin-left: 0; /* Remove any left margin for full width */
-    }
-  
-   
-  
-    /* Adjust profile container */
-    .profile-container {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-  
-   
-   
-  
-    .stats-section {
-      display: block;
-      width: 100%;
-    }
-  
-    .stat-card {
-      width: 100%; /* Ensure each stat card takes full width on mobile */
-      margin-bottom: 1rem;
-    }
-  
-    /* Ensure content inside the user-illegal section takes full width */
-    .user-illegal {
-      width: 100%;
-      display: block;
-    }
-  
-    .user-box {
-      width: 100%;
-      margin-bottom: 1rem;
-    }
-  }
-  
-
-
-@media (max-width: 768px) {
-    h3 {
-      font-size: 17px; /* Reduce font size for h3 */
-      gap: 10px; /* Reduce the gap between text and icon */
-    }
-  
-    table {
-      font-size: 13px; /* Reduce font size in the table */
-    }
-  
-    .editDel {
-      gap: 5px; /* Reduce gap between icons */
-    }
-  
-    th, td {
-      padding: 8px; /* Reduce padding for smaller screens */
-    }
-  
-    .resolve-icon, .edit-icon, .delete-icon {
-      font-size: 19px; /* Reduce icon size */
-    }
-  }
-  
-  @media (max-width: 480px) {
-    h3 {
-      font-size: 15px; /* Further reduce font size for very small screens */
-    }
-  
-    table {
-      font-size: 11px; /* Further reduce table text */
-    }
-  
-    .editDel {
-      gap: 3px; /* Further reduce gap between icons */
-    }
-  
-    .resolve-icon, .edit-icon, .delete-icon {
-      font-size: 17px; /* Further reduce icon size */
-    }
-  }
