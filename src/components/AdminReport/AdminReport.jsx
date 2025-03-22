@@ -11,6 +11,8 @@ import { BsExclamationTriangle } from "react-icons/bs";
 import { FiTrash2 } from "react-icons/fi";
 import { getDatabase, ref, onValue, set } from "firebase/database";
 import { MdClose } from "react-icons/md";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import "./AdminReport.css";
 
@@ -24,6 +26,7 @@ const AdminReport = () => {
   const [showModal, setShowModal] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [viewedReports, setViewedReports] = useState({});
+  const [notifications, setNotifications] = useState([]);
 
   const db = getDatabase();
 
@@ -45,6 +48,30 @@ const AdminReport = () => {
       const data = snapshot.val();
       if (data) {
         setViewedReports(data);
+      }
+    });
+
+    // Listen for new notifications
+    const notificationsRef = ref(db, "notifications/");
+    onValue(notificationsRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        const notificationsArray = Object.values(data).sort((a, b) => b.timestamp - a.timestamp);
+        setNotifications(notificationsArray);
+        
+        // Show toast for new unread notifications
+        notificationsArray.forEach(notification => {
+          if (!notification.read) {
+            toast.info(notification.message, {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+            });
+          }
+        });
       }
     });
   }, [db]);
@@ -87,6 +114,23 @@ const AdminReport = () => {
     }
   };
 
+  // Function to format time ago
+  const getTimeAgo = (timestamp) => {
+    const seconds = Math.floor((Date.now() - timestamp) / 1000);
+    let interval = Math.floor(seconds / 31536000);
+    
+    if (interval >= 1) return interval + " year" + (interval === 1 ? "" : "s") + " ago";
+    interval = Math.floor(seconds / 2592000);
+    if (interval >= 1) return interval + " month" + (interval === 1 ? "" : "s") + " ago";
+    interval = Math.floor(seconds / 86400);
+    if (interval >= 1) return interval + " day" + (interval === 1 ? "" : "s") + " ago";
+    interval = Math.floor(seconds / 3600);
+    if (interval >= 1) return interval + " hour" + (interval === 1 ? "" : "s") + " ago";
+    interval = Math.floor(seconds / 60);
+    if (interval >= 1) return interval + " minute" + (interval === 1 ? "" : "s") + " ago";
+    return "Just now";
+  };
+
   return (
     <div className="dashboard-container">
       {/* Sidebar */}
@@ -95,6 +139,7 @@ const AdminReport = () => {
       {/* Main Content */}
       <main className="main-content">
         <Topbar />
+        <ToastContainer />
 
         {/* Success Message */}
         {showSuccess && (
@@ -107,7 +152,7 @@ const AdminReport = () => {
         {showModal && selectedReport && (
           <div className="modal-overlay" onClick={handleCloseModal}>
             <div className="review-modal">
-              <button className="close-modal-button" onClick={() => setShowModal(false)}>
+              <button className="close-button" onClick={() => setShowModal(false)}>
                 <MdClose />
               </button>
               <h2>Review Report</h2>

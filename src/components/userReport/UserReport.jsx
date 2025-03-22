@@ -110,6 +110,21 @@ const UserReport = () => {
       // Save to Firebase
       set(ref(db, `submittedReports/${reportId}`), reportData)
         .then(() => {
+          // Create notification for admin
+          const notificationId = Date.now();
+          const notificationData = {
+            id: notificationId,
+            image: currentUser?.image || "https://via.placeholder.com/40",
+            message: `You have received a waste report submission from ${formData.user}`,
+            timestamp: Date.now(),
+            reportId: reportId,
+            read: false
+          };
+
+          // Save notification to Firebase
+          return set(ref(db, `notifications/${notificationId}`), notificationData);
+        })
+        .then(() => {
           setShowSuccessMessage(true);
           setTimeout(() => setShowSuccessMessage(false), 3000);
           
@@ -121,7 +136,7 @@ const UserReport = () => {
             date: "",
             user: "",
             image: null,
-            googleMapLink: "", // Reset the Google Map Link as well
+            googleMapLink: "",
           });
           // Reset file input
           document.querySelector('input[type="file"]').value = "";
