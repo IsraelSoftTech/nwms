@@ -96,6 +96,12 @@ const UserReport = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
+    // Check if form is complete before proceeding
+    if (!isFormComplete) {
+      return;
+    }
+
     const reportId = Date.now(); // Simple ID generation
 
     // Convert image to base64
