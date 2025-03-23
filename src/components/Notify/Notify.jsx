@@ -1,12 +1,57 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { MdSettings } from "react-icons/md";
+import { getDatabase, ref, onValue, set } from "firebase/database";
 import "./Notify.css";
 
-const Notify = ({ notifications, onClose }) => {
+const Notify = ({ onClose, onNotificationClick, isAdmin }) => {
   const [showAll] = useState(false);
+  const [notifications, setNotifications] = useState([]);
+  const db = getDatabase();
 
-  // Determine the displayed notifications based on the showAll state
-  const displayedNotifications = showAll ? notifications : notifications.slice(0, 6);
+  useEffect(() => {
+    // Fetch notifications from Firebase
+    const notificationsRef = ref(db, 'notifications/');
+    onValue(notificationsRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        // Convert object to array and sort by timestamp (newest first)
+        const notificationsArray = Object.values(data).sort((a, b) => b.timestamp - a.timestamp);
+        setNotifications(notificationsArray);
+      }
+    });
+  }, [db]);
+
+  // Function to format time ago
+  const getTimeAgo = (timestamp) => {
+    const seconds = Math.floor((Date.now() - timestamp) / 1000);
+    let interval = Math.floor(seconds / 31536000);
+    
+    if (interval >= 1) return interval + " year" + (interval === 1 ? "" : "s") + " ago";
+    interval = Math.floor(seconds / 2592000);
+    if (interval >= 1) return interval + " month" + (interval === 1 ? "" : "s") + " ago";
+    interval = Math.floor(seconds / 86400);
+    if (interval >= 1) return interval + " day" + (interval === 1 ? "" : "s") + " ago";
+    interval = Math.floor(seconds / 3600);
+    if (interval >= 1) return interval + " hour" + (interval === 1 ? "" : "s") + " ago";
+    interval = Math.floor(seconds / 60);
+    if (interval >= 1) return interval + " minute" + (interval === 1 ? "" : "s") + " ago";
+    return "Just now";
+  };
+
+  // Function to handle notification click
+  const handleNotificationClick = async (notification) => {
+    try {
+      // Mark as read
+      await set(ref(db, `notifications/${notification.id}/read`), true);
+      // Navigate to the report
+      onNotificationClick(notification.reportId);
+    } catch (error) {
+      console.error("Error handling notification click:", error);
+    }
+  };
+
+  // Determine the displayed notifications based on the showAll state and admin status
+  const displayedNotifications = isAdmin ? (showAll ? notifications : notifications.slice(0, 6)) : [];
 
   return (
     <div className={`notify-box ${displayedNotifications.length > 6 ? 'scrollable' : ''}`}>
@@ -15,60 +60,31 @@ const Notify = ({ notifications, onClose }) => {
         <MdSettings className="settings-icon" />
       </div>
       <div className="notify-list">
-        {displayedNotifications.map((notification, index) => (
-          <div key={index} className="notify-item">
-            <img src={notification.image} alt="User" className="notify-avatar" />
-            <div className="notify-content">
-              <p>{notification.message}</p>
-              <span>{notification.time}</span>
+        {isAdmin ? (
+          displayedNotifications.map((notification) => (
+            <div 
+              key={notification.id} 
+              className={`notify-item ${!notification.read ? 'unread' : ''}`}
+              onClick={() => handleNotificationClick(notification)}
+              style={{ cursor: 'pointer' }}
+            >
+              <img src={notification.image} alt="User" className="notify-avatar" />
+              <div className="notify-content">
+                <p>{notification.message}</p>
+                <span>{getTimeAgo(notification.timestamp)}</span>
+              </div>
             </div>
+          ))
+        ) : (
+          <div className="no-notifications">
+            <p>No notifications</p>
           </div>
-        ))}
+        )}
       </div>
     </div>
   );
 };
 
-// Default notifications data
-const notifications = [
-  { 
-    image: "path/to/avatar1.jpg", 
-    message: "Brigid Dawson followed you", 
-    time: "4 hours ago" 
-  },
-  { 
-    image: "path/to/avatar2.jpg", 
-    message: "John Dwyer liked your post", 
-    time: "Yesterday" 
-  },
-  { 
-    image: "path/to/avatar3.jpg", 
-    message: "Tim Hellman liked your post", 
-    time: "Tuesday" 
-  },
-  { 
-    image: "path/to/avatar4.jpg", 
-    message: "Running low on storage space", 
-    time: "Monday" 
-  },
-  { 
-    image: "path/to/avatar5.jpg", 
-    message: "Shannon Shaw commented on your post", 
-    time: "4 days ago" 
-  },
-  { 
-    image: "path/to/avatar6.jpg", 
-    message: "Alice Smith mentioned you", 
-    time: "3 days ago" 
-  },
-  { 
-    image: "path/to/avatar7.jpg", 
-    message: "Bob Johnson liked your comment", 
-    time: "1 day ago" 
-  },
-  // Add more notifications as needed
-];
-
-export default function NotifyWrapper({ onClose }) {
-  return <Notify notifications={notifications} onClose={onClose} />;
+export default function NotifyWrapper({ onClose, onNotificationClick, isAdmin }) {
+  return <Notify onClose={onClose} onNotificationClick={onNotificationClick} isAdmin={isAdmin} />;
 }

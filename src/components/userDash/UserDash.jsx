@@ -1,5 +1,6 @@
-import React from "react";
-import { FaRegFileAlt, FaTrash, FaCheckCircle,FaTruckPickup } from "react-icons/fa";
+import React, { useEffect, useState } from "react";
+import { FaRegFileAlt, FaTrash, FaCheckCircle, FaTruckPickup } from "react-icons/fa";
+import { getDatabase, ref, onValue } from "firebase/database";
 
 import ws1 from "../../assets/ws1.jpeg"
 import ws2 from "../../assets/ws2.jpg"
@@ -11,10 +12,43 @@ import "./UserDash.css";
 import Topbar from "../Topbar/Topbar";
 import UserSidebar from "../UserSidebar/UserSidebar";
 
-
-
 const UserDash = () => {
+  const [totalReports, setTotalReports] = useState(0);
+  const [pendingReports, setPendingReports] = useState(0);
+  const [completedReports, setCompletedReports] = useState(0);
+  const db = getDatabase();
 
+  useEffect(() => {
+    // Get current user from session storage
+    const currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
+    if (!currentUser) return;
+
+    // Fetch reports for the current user
+    const reportsRef = ref(db, "submittedReports/");
+    onValue(reportsRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        // Filter reports for current user
+        const userReports = Object.values(data).filter(
+          (report) => report.user === currentUser.username
+        );
+        
+        // Set total reports
+        setTotalReports(userReports.length);
+        
+        // Count pending and completed reports
+        const pending = userReports.filter(report => !report.status || report.status === 'pending').length;
+        const completed = userReports.filter(report => report.status === 'resolved').length;
+        
+        setPendingReports(pending);
+        setCompletedReports(completed);
+      } else {
+        setTotalReports(0);
+        setPendingReports(0);
+        setCompletedReports(0);
+      }
+    });
+  }, [db]);
 
   return (
     <div className="dashboard-container">
@@ -27,19 +61,25 @@ const UserDash = () => {
 
         <section className="stats-section">
           <div className="stat-card">
-            <FaRegFileAlt className="icon" style={{ color: "rgb(77, 76, 76)", background: "#e2e4e3", padding: "7px", fontSize: "40px", borderRadius: "50%" }} />
-            <h3>Total Reports</h3>
-            <p>21</p>
+            <FaRegFileAlt className="icon2" />
+            <div className="card-count">
+            <p>Total Reports</p>
+            <p>{totalReports}</p>
+            </div>
           </div>
           <div className="stat-card">
-            <FaTruckPickup className="icon" style={{ color: "rgb(77, 76, 76)", background: "#e2e4e3", padding: "7px", fontSize: "40px", borderRadius: "50%" }}  />
-            <h3>Pending Pick-ups</h3>
-            <p>12</p>
+            <FaTruckPickup className="icon2"  />
+            <div className="card-count">
+            <p>Pending Pick-ups</p>
+            <p>{pendingReports}</p>
+            </div>
           </div>
           <div className="stat-card">
-            <FaCheckCircle className="icon" style={{ color: "rgb(77, 76, 76)", background: "#e2e4e3", padding: "7px", fontSize: "40px", borderRadius: "50%" }}  />
-            <h3>Completed Pick-ups</h3>
-            <p>10</p>
+            <FaCheckCircle className="icon2" />
+            <div className="card-count">
+            <p>Completed Pick-ups</p>
+            <p>{completedReports}</p>
+            </div>
           </div>
         </section>
 
