@@ -1,0 +1,53 @@
+.loader-container {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row; /* Align boxes in a row */
+    height: 100vh; /* Full height */
+  }
+  
+  .box {
+    width: 20px; /* Width of the square boxes */
+    height: 20px; /* Height of the square boxes */
+    background-color: blue; /* Color of the square boxes */
+    margin: 0 10px; /* Space between boxes */
+    animation: move 0.8s infinite alternate; /* Animation for squares */
+  }
+  
+  .box.vertical {
+    width: 10px; /* Width of the vertical box */
+    height: 50px; /* Initial height */
+    background-color: orange; /* Color of the vertical box */
+    animation: grow 0.8s infinite alternate; /* Animation for vertical box */
+  }
+  
+  .box:first-child {
+    animation-name: moveLeft; /* Animation for left box */
+  }
+  
+  .box:last-child {
+    animation-name: moveRight; /* Animation for right box */
+  }
+  
+  @keyframes moveLeft {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50px); } /* Move left */
+  }
+  
+  @keyframes moveRight {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(50px); } /* Move right */
+  }
+  
+  @keyframes grow {
+    0% { height: 50px; } /* Initial height */
+    100% { height: 70px; } /* Increased height */
+  }
+  
+  .powered-by {
+    margin-top: 20px; /* Space between boxes and text */
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    color: #333; /* Change color as needed */
+    text-align: center; /* Center the text */
+  }

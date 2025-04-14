@@ -1,0 +1,42 @@
+.close-btn{
+    margin-left: 100px;
+   position: absolute;
+ right: 60px;
+ border: none;
+ border-radius: 50%;
+ background: #fff;
+ width: 30px;
+ height: 30px;
+ color: #ff6600;
+ box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+}
+.selected-content{
+    background: #f0efef;
+    padding: 20px;
+    border-radius: 5px;
+}
+.content-header{
+    padding: 10px;
+}
+.reading{
+    background: #ff6600;
+    padding: 5px;
+    border-radius: 4px;
+}
+.to-be-read{
+    padding: 5px;
+    border-radius: 4px;
+    background: #ccc;
+}
+.status-count{
+    display: flex;
+    gap: 1rem;
+}
+.content-list{
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    overflow-y: scroll;
+   height: 300px;
+}

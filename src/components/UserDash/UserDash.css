@@ -1,0 +1,8 @@
+.chat-box h4, .analysis h4{
+    background: linear-gradient(to right, #34aadc, #4b8fca);
+padding: 4px;
+color: #fff;
+border-radius: 3px;
+position: sticky;
+top: 0;
+}
