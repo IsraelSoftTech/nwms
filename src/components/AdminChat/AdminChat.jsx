@@ -15,10 +15,10 @@ import {
 } from "react-icons/fa";
 import { MdDashboard, MdReportProblem } from "react-icons/md";
 import { FiLogOut } from "react-icons/fi";
-import logo from "../../assets/logo.png";
 import { Link } from 'react-router-dom';
 import { database, ref, set, get } from "../../firebase";
 import EmojiPicker from 'emoji-picker-react'; // Make sure to install this package
+import Profile from '../Profile/Profile'; // Import Profile component
 
 const AdminChat = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -29,6 +29,7 @@ const AdminChat = () => {
   const [file, setFile] = useState(null);
   const [emojiPickerVisible, setEmojiPickerVisible] = useState(false);
   const fileInputRef = useRef(null);
+  const [showProfileModal, setShowProfileModal] = useState(false); // State for the profile modal
 
   // Fetch messages on component mount and set up polling
   useEffect(() => {
@@ -105,7 +106,6 @@ const AdminChat = () => {
       {/* Sidebar */}
       <aside className={`sidebar ${sidebarOpen ? "open" : ""}`}>
         <div className="logo">
-      
           <h1>Waste <span style={{color:"#ff6600"}}>Manager</span></h1>
         </div>
         {sidebarOpen && (
@@ -141,11 +141,11 @@ const AdminChat = () => {
           </li>
           <li className="active">
             <Link to="/admin-chat" className="link-no-style">
-              <FaCommentAlt  className="side-icon"  /> Chat
+              <FaCommentAlt className="side-icon" /> Chat
             </Link>
           </li>
         </ul>
-        <button className="logout">
+        <button className="logout" onClick={() => setShowProfileModal(true)}>
           <FiLogOut /> Log out
         </button>
       </aside>
@@ -168,7 +168,7 @@ const AdminChat = () => {
               <span className="notif-count">1</span>
             </div>
             <img src="https://i.pravatar.cc/40" alt="User" className="profile-pic" />
-            <button className="ad-btn">Ad</button>
+            <button className="ad-btn" onClick={() => setShowProfileModal(true)}>Ad</button>
           </div>
         </header>
 
@@ -233,6 +233,8 @@ const AdminChat = () => {
           </form>
         </div>
       </main>
+
+      {showProfileModal && <Profile onClose={() => setShowProfileModal(false)} />} {/* Modal Component */}
     </div>
   );
 };

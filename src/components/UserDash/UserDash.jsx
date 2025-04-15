@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import "./UserDash.css";
 import {
   FaBars,
@@ -23,12 +23,14 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import logo from "../../assets/logo.png";
 import { Link } from 'react-router-dom';
+import Profile from '../Profile/Profile'; // Import Profile component
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
+
 const UserDash = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [showProfileModal, setShowProfileModal] = useState(false); // State for the profile modal
 
   const graphData = {
     labels: ["Week 1", "Week 2", "Week 3", "Week 4"],
@@ -62,7 +64,6 @@ const UserDash = () => {
       {/* Sidebar */}
       <aside className={`sidebar ${sidebarOpen ? "open" : ""}`}>
         <div className="logo">
-      
           <h1>Waste <span style={{color:"#ff6600"}}>Manager</span></h1>
         </div>
         {sidebarOpen && (
@@ -71,38 +72,38 @@ const UserDash = () => {
           </button>
         )}
         <ul className="menu">
-  <li className="active">
-    <Link to="/user-dash" className="link-no-style">
-      <MdDashboard className="side-icon" /> Dashboard
-    </Link>
-  </li>
-  <li>
-    <Link to="/user-report" className="link-no-style">
-      <FaRegFileAlt  /> Reports
-    </Link>
-  </li>
-  <li>
-    <Link to="/user-schedule" className="link-no-style">
-      <FaRegCalendarAlt /> Schedule
-    </Link>
-  </li>
-  <li>
-    <Link to="/user-illegal" className="link-no-style">
-      <MdReportProblem /> Illegal Dumps
-    </Link>
-  </li>
-  <li>
-    <Link to="/user-education" className="link-no-style">
-      <FaGraduationCap /> Education
-    </Link>
-  </li>
-  <li>
-    <Link to="/user-chat" className="link-no-style">
-      <FaCommentAlt /> Chat
-    </Link>
-  </li>
-</ul>
-        <button className="logout">
+          <li className="active">
+            <Link to="/user-dash" className="link-no-style">
+              <MdDashboard className="side-icon" /> Dashboard
+            </Link>
+          </li>
+          <li>
+            <Link to="/user-report" className="link-no-style">
+              <FaRegFileAlt /> Reports
+            </Link>
+          </li>
+          <li>
+            <Link to="/user-schedule" className="link-no-style">
+              <FaRegCalendarAlt /> Schedule
+            </Link>
+          </li>
+          <li>
+            <Link to="/user-illegal" className="link-no-style">
+              <MdReportProblem /> Illegal Dumps
+            </Link>
+          </li>
+          <li>
+            <Link to="/user-education" className="link-no-style">
+              <FaGraduationCap /> Education
+            </Link>
+          </li>
+          <li>
+            <Link to="/user-chat" className="link-no-style">
+              <FaCommentAlt /> Chat
+            </Link>
+          </li>
+        </ul>
+        <button className="logout" onClick={() => setShowProfileModal(true)}>
           <FiLogOut /> Log out
         </button>
       </aside>
@@ -125,7 +126,7 @@ const UserDash = () => {
               <span className="notif-count">1</span>
             </div>
             <img src="https://i.pravatar.cc/40" alt="User" className="profile-pic" />
-            <button className="ad-btn">Us</button>
+            <button className="ad-btn" onClick={() => setShowProfileModal(true)}>Us</button>
           </div>
         </header>
 
@@ -168,7 +169,7 @@ const UserDash = () => {
 
             <div className="sub-cards">
               <div className="sub-card">
-                <MdAutoGraph  className="sub-card-icon" />
+                <MdAutoGraph className="sub-card-icon" />
                 <div className="sub-card-tools">
                   <h1>18</h1>
                   <p>6 successful pickups</p>
@@ -246,44 +247,14 @@ const UserDash = () => {
                 </div>
                 <span>04:26 PM</span>
               </li>
-              <li>
-                <img src="https://i.pravatar.cc/40?img=3" alt="George" />
-                <div>
-                  <strong>George Henry</strong>
-                  <p>Hi, Good afternoon</p>
-                </div>
-                <span>04:26 PM</span>
-              </li>
-              <li>
-                <img src="https://i.pravatar.cc/40?img=3" alt="George" />
-                <div>
-                  <strong>George Henry</strong>
-                  <p>Hi, Good afternoon</p>
-                </div>
-                <span>04:26 PM</span>
-              </li>
-              <li>
-                <img src="https://i.pravatar.cc/40?img=3" alt="George" />
-                <div>
-                  <strong>George Henry</strong>
-                  <p>Hi, Good afternoon</p>
-                </div>
-                <span>04:26 PM</span>
-              </li>
-              <li>
-                <img src="https://i.pravatar.cc/40?img=3" alt="George" />
-                <div>
-                  <strong>George Henry</strong>
-                  <p>Hi, Good afternoon</p>
-                </div>
-                <span>04:26 PM</span>
-              </li>
             </ul>
           </div>
         </section>
       </main>
+
+      {showProfileModal && <Profile onClose={() => setShowProfileModal(false)} />} {/* Modal Component */}
     </div>
   );
 };
 
-export default UserDash
+export default UserDash;

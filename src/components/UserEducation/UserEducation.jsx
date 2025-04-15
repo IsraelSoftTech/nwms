@@ -14,9 +14,9 @@ import {
 } from "react-icons/fa";
 import { MdClose, MdDashboard, MdReportProblem } from "react-icons/md";
 import { FiLogOut } from "react-icons/fi";
-import logo from "../../assets/logo.png";
 import { Link } from 'react-router-dom';
 import { database, ref, get } from "../../firebase";
+import Profile from '../Profile/Profile'; // Import Profile component
 
 const UserEducation = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -28,6 +28,7 @@ const UserEducation = () => {
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedContent, setSelectedContent] = useState(null);
+  const [showProfileModal, setShowProfileModal] = useState(false); // State for the profile modal
 
   // Fetch contents on component mount
   useEffect(() => {
@@ -99,7 +100,6 @@ const UserEducation = () => {
       {/* Sidebar */}
       <aside className={`sidebar ${sidebarOpen ? "open" : ""}`}>
         <div className="logo">
-       
           <h1>Waste <span style={{color:"#ff6600"}}>Manager</span></h1>
         </div>
         {sidebarOpen && (
@@ -110,7 +110,7 @@ const UserEducation = () => {
         <ul className="menu">
           <li>
             <Link to="/user-dash" className="link-no-style">
-              <MdDashboard  /> Dashboard
+              <MdDashboard /> Dashboard
             </Link>
           </li>
           <li>
@@ -139,7 +139,7 @@ const UserEducation = () => {
             </Link>
           </li>
         </ul>
-        <button className="logout">
+        <button className="logout" onClick={() => setShowProfileModal(true)}>
           <FiLogOut /> Log out
         </button>
       </aside>
@@ -168,7 +168,7 @@ const UserEducation = () => {
               <span className="notif-count">1</span>
             </div>
             <img src="https://i.pravatar.cc/40" alt="User" className="profile-pic" />
-            <button className="ad-btn">Us</button>
+            <button className="ad-btn" onClick={() => setShowProfileModal(true)}>Us</button>
           </div>
         </header>
 
@@ -255,6 +255,8 @@ const UserEducation = () => {
           )}
         </div>
       </main>
+
+      {showProfileModal && <Profile onClose={() => setShowProfileModal(false)} />} {/* Modal Component */}
     </div>
   );
 };

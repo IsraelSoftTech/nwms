@@ -25,11 +25,13 @@ import {
 } from "chart.js";
 import logo from "../../assets/logo.png";
 import { Link } from 'react-router-dom';
+import Profile from '../Profile/Profile'; // Import Profile component
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 const AdminDash = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [showProfileModal, setShowProfileModal] = useState(false); // State for the profile modal
 
   const graphData = {
     labels: ["Week 1", "Week 2", "Week 3", "Week 4"],
@@ -76,12 +78,11 @@ const AdminDash = () => {
       {/* Sidebar */}
       <aside className={`sidebar ${sidebarOpen ? "open" : ""}`}>
         <div className="logo">
-      
-          <h1>Waste <span style={{color:"#ff6600"}}>Manager</span></h1>
+          <h1>Waste <span style={{ color: "#ff6600" }}>Manager</span></h1>
         </div>
         {sidebarOpen && (
           <button className="close-sidebar" onClick={() => setSidebarOpen(false)}>
-            <FaTimes style={{fontSize:"15px",display:"flex", position:"absolute", left:"0",alignItems:"center",top:"0"}}/>
+            <FaTimes style={{ fontSize: "15px", display: "flex", position: "absolute", left: "0", alignItems: "center", top: "0" }} />
           </button>
         )}
         <ul className="menu">
@@ -116,7 +117,7 @@ const AdminDash = () => {
             </Link>
           </li>
         </ul>
-        <button className="logout">
+        <button className="logout" onClick={() => setShowProfileModal(true)}>
           <FiLogOut /> Log out
         </button>
       </aside>
@@ -139,7 +140,7 @@ const AdminDash = () => {
               <span className="notif-count">1</span>
             </div>
             <img src="https://i.pravatar.cc/40" alt="User" className="profile-pic" />
-            <button className="ad-btn">Ad</button>
+            <button className="ad-btn" onClick={() => setShowProfileModal(true)}>Ad</button>
           </div>
         </header>
 
@@ -264,6 +265,8 @@ const AdminDash = () => {
           </div>
         </section>
       </main>
+
+      {showProfileModal && <Profile onClose={() => setShowProfileModal(false)} />} {/* Modal Component */}
     </div>
   );
 };

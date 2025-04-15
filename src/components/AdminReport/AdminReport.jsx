@@ -28,6 +28,7 @@ import {
 import logo from "../../assets/logo.png";
 import { Link } from 'react-router-dom';
 import { database, ref, get } from "../../firebase";
+import Profile from '../Profile/Profile'; // Import Profile component
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
@@ -39,6 +40,7 @@ const AdminReport = () => {
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedReport, setSelectedReport] = useState(null);
+  const [showProfileModal, setShowProfileModal] = useState(false); // State for the profile modal
 
   // Fetch reports on component mount
   useEffect(() => {
@@ -115,8 +117,7 @@ const AdminReport = () => {
       {/* Sidebar */}
       <aside className={`sidebar ${sidebarOpen ? "open" : ""}`}>
         <div className="logo">
-     
-          <h1>Waste <span style={{color:"#ff6600"}}>Manager</span></h1>
+          <h1>Waste <span style={{ color: "#ff6600" }}>Manager</span></h1>
         </div>
         {sidebarOpen && (
           <button className="close-sidebar" onClick={() => setSidebarOpen(false)}>
@@ -155,7 +156,7 @@ const AdminReport = () => {
             </Link>
           </li>
         </ul>
-        <button className="logout">
+        <button className="logout" onClick={() => setShowProfileModal(true)}>
           <FiLogOut /> Log out
         </button>
       </aside>
@@ -183,7 +184,7 @@ const AdminReport = () => {
               <span className="notif-count">1</span>
             </div>
             <img src="https://i.pravatar.cc/40" alt="User" className="profile-pic" />
-            <button className="ad-btn">Ad</button>
+            <button className="ad-btn" onClick={() => setShowProfileModal(true)}>Ad</button>
           </div>
         </header>
 
@@ -271,8 +272,6 @@ const AdminReport = () => {
 
         {/* Bottom Section */}
         <section className="bottom-section">
-        
-
           {/* Reports Table */}
           <div className="reports-table-container">
             <table className="reports-table">
@@ -349,6 +348,8 @@ const AdminReport = () => {
           )}
         </section>
       </main>
+
+      {showProfileModal && <Profile onClose={() => setShowProfileModal(false)} />} {/* Modal Component */}
     </div>
   );
 };
