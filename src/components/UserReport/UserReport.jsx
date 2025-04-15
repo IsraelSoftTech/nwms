@@ -66,7 +66,7 @@ const UserReport = () => {
         {/* Sidebar */}
         <aside className={`sidebar ${sidebarOpen ? "open" : ""}`}>
           <div className="logo">
-            <img src={logo} alt="" />
+        
             <h1>Waste <span style={{color:"#ff6600"}}>Manager</span></h1>
           </div>
           {sidebarOpen && (
@@ -221,7 +221,7 @@ const UserReport = () => {
   
             <div className="chat-box">
 
-              <h4>Report Submission Form</h4>
+              <h3>Report Submission Form</h3>
               <div className="form-container">
       <h2>Report a waste</h2>
       <div className="form-content">

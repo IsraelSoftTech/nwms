@@ -532,6 +532,11 @@ flex: 1;
   
     .content-card {
       min-height: auto;
+
+  
+    }
+    .cards-container{
+      margin-top: 0;
     }
   } 
 

@@ -76,12 +76,12 @@ const AdminDash = () => {
       {/* Sidebar */}
       <aside className={`sidebar ${sidebarOpen ? "open" : ""}`}>
         <div className="logo">
-          <img src={logo} alt="" />
+      
           <h1>Waste <span style={{color:"#ff6600"}}>Manager</span></h1>
         </div>
         {sidebarOpen && (
           <button className="close-sidebar" onClick={() => setSidebarOpen(false)}>
-            <FaTimes />
+            <FaTimes style={{fontSize:"15px",display:"flex", position:"absolute", left:"0",alignItems:"center",top:"0"}}/>
           </button>
         )}
         <ul className="menu">

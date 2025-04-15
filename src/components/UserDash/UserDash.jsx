@@ -62,7 +62,7 @@ const UserDash = () => {
       {/* Sidebar */}
       <aside className={`sidebar ${sidebarOpen ? "open" : ""}`}>
         <div className="logo">
-          <img src={logo} alt="" />
+      
           <h1>Waste <span style={{color:"#ff6600"}}>Manager</span></h1>
         </div>
         {sidebarOpen && (
@@ -214,13 +214,13 @@ const UserDash = () => {
         {/* Bottom Section */}
         <section className="bottom-section">
           <div className="analysis">
-            <h4>Analysis</h4>
+            <h3>Analysis</h3>
             <p>Report Submission</p>
             <Bar data={graphData} options={graphOptions} />
           </div>
 
           <div className="chat-box">
-            <h4>My Chats</h4>
+            <h3>My Chats</h3>
             <ul>
               <li>
                 <img src="https://i.pravatar.cc/40?img=1" alt="Arlo" />
