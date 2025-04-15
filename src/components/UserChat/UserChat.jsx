@@ -164,7 +164,7 @@ const UserChat = () => {
           </li>
           <li className="active">
             <Link to="/user-chat" className="link-no-style">
-              <FaCommentAlt /> Chat
+              <FaCommentAlt  className="side-icon"  /> Chat
             </Link>
           </li>
         </ul>

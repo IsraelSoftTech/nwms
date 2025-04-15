@@ -68,6 +68,7 @@
     border-radius: 15px;
     position: relative;
   }
+
   
   .message.sent .message-content {
     background-color: #dcf8c6;
@@ -128,11 +129,7 @@
   
   /* Responsive styles */
   @media (max-width: 768px) {
-    .sidebar {
-      transform: translateX(-100%);
-      width: 100%;
-    }
-  
+   
     .main-content {
       margin-left: 0;
     }

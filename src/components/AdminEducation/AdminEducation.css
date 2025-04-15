@@ -526,7 +526,7 @@ flex: 1;
   
     .sidebar.open {
       left: 0;
-      background: #f4f5f7;
+      background: #fff;
     }
   
     .close-sidebar {
@@ -537,11 +537,7 @@ flex: 1;
       padding: 15px;
     }
   
-    .topbar {
-      align-items: flex-start;
-      gap: 10px;
-      width: 100%;
-    }
+   
   
     .cards-container {
       flex-direction: column;

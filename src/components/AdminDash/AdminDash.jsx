@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./AdminDash.css";
 import {
   FaBars,
@@ -25,6 +25,7 @@ import {
 } from "chart.js";
 import logo from "../../assets/logo.png";
 import { Link } from 'react-router-dom';
+
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 const AdminDash = () => {
@@ -57,6 +58,19 @@ const AdminDash = () => {
     },
   };
 
+  const handleOutsideClick = (event) => {
+    if (sidebarOpen && !event.target.closest('.sidebar') && !event.target.closest('.menu-toggle')) {
+      setSidebarOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('click', handleOutsideClick);
+    return () => {
+      document.removeEventListener('click', handleOutsideClick);
+    };
+  }, [sidebarOpen]);
+
   return (
     <div className="admin-container">
       {/* Sidebar */}
@@ -70,38 +84,38 @@ const AdminDash = () => {
             <FaTimes />
           </button>
         )}
-      <ul className="menu">
-  <li className="active">
-    <Link to="/admin-dash" className="link-no-style">
-      <MdDashboard className="side-icon" /> Dashboard
-    </Link>
-  </li>
-  <li>
-    <Link to="/admin-report" className="link-no-style">
-      <FaRegFileAlt  /> Reports
-    </Link>
-  </li>
-  <li>
-    <Link to="/admin-schedule" className="link-no-style">
-      <FaRegCalendarAlt /> Schedule
-    </Link>
-  </li>
-  <li>
-    <Link to="/admin-illegal" className="link-no-style">
-      <MdReportProblem /> Illegal Dumps
-    </Link>
-  </li>
-  <li>
-    <Link to="/admin-education" className="link-no-style">
-      <FaGraduationCap /> Education
-    </Link>
-  </li>
-  <li>
-    <Link to="/admin-chat" className="link-no-style">
-      <FaCommentAlt /> Chat
-    </Link>
-  </li>
-</ul>
+        <ul className="menu">
+          <li className="active">
+            <Link to="/admin-dash" className="link-no-style">
+              <MdDashboard className="side-icon" /> Dashboard
+            </Link>
+          </li>
+          <li>
+            <Link to="/admin-report" className="link-no-style">
+              <FaRegFileAlt /> Reports
+            </Link>
+          </li>
+          <li>
+            <Link to="/admin-schedule" className="link-no-style">
+              <FaRegCalendarAlt /> Schedule
+            </Link>
+          </li>
+          <li>
+            <Link to="/admin-illegal" className="link-no-style">
+              <MdReportProblem /> Illegal Dumps
+            </Link>
+          </li>
+          <li>
+            <Link to="/admin-education" className="link-no-style">
+              <FaGraduationCap /> Education
+            </Link>
+          </li>
+          <li>
+            <Link to="/admin-chat" className="link-no-style">
+              <FaCommentAlt /> Chat
+            </Link>
+          </li>
+        </ul>
         <button className="logout">
           <FiLogOut /> Log out
         </button>
@@ -237,38 +251,6 @@ const AdminDash = () => {
                   <p>I need a car...</p>
                 </div>
                 <span className="unread">06:05 PM</span>
-              </li>
-              <li>
-                <img src="https://i.pravatar.cc/40?img=3" alt="George" />
-                <div>
-                  <strong>George Henry</strong>
-                  <p>Hi, Good afternoon</p>
-                </div>
-                <span>04:26 PM</span>
-              </li>
-              <li>
-                <img src="https://i.pravatar.cc/40?img=3" alt="George" />
-                <div>
-                  <strong>George Henry</strong>
-                  <p>Hi, Good afternoon</p>
-                </div>
-                <span>04:26 PM</span>
-              </li>
-              <li>
-                <img src="https://i.pravatar.cc/40?img=3" alt="George" />
-                <div>
-                  <strong>George Henry</strong>
-                  <p>Hi, Good afternoon</p>
-                </div>
-                <span>04:26 PM</span>
-              </li>
-              <li>
-                <img src="https://i.pravatar.cc/40?img=3" alt="George" />
-                <div>
-                  <strong>George Henry</strong>
-                  <p>Hi, Good afternoon</p>
-                </div>
-                <span>04:26 PM</span>
               </li>
               <li>
                 <img src="https://i.pravatar.cc/40?img=3" alt="George" />

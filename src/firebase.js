@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, set, get, child, remove } from "firebase/database"; // ✅ Import remove
+import { getDatabase, ref, set, get, child, remove, update } from "firebase/database"; // ✅ Import update
 import { getStorage } from "firebase/storage"; // ✅ Import Storage
 
 // Firebase configuration
@@ -19,4 +19,4 @@ const database = getDatabase(app); // ✅ Realtime DB
 const storage = getStorage(app);   // ✅ Firebase Storage
 
 // ✅ Export everything needed
-export { database, storage, ref, set, get, child, remove }; // Include remove in exports
+export { database, storage, ref, set, get, child, remove, update }; // Include update in exports

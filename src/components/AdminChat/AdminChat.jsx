@@ -141,7 +141,7 @@ const AdminChat = () => {
           </li>
           <li className="active">
             <Link to="/admin-chat" className="link-no-style">
-              <FaCommentAlt /> Chat
+              <FaCommentAlt  className="side-icon"  /> Chat
             </Link>
           </li>
         </ul>

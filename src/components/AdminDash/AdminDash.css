@@ -13,7 +13,7 @@
   display: flex;
   flex-direction: column;
   transition: left 0.3s ease;
-  z-index: 1100;
+  z-index: 2000;
 }
 .sidebar .logo {
   text-align: center;
@@ -24,7 +24,6 @@
   list-style: none;
   padding: 0;
   margin-bottom: auto;
-  text-decoration: none;
 }
 .link-no-style {
   text-decoration: none;
@@ -42,7 +41,6 @@
   margin: 15px 0;
   color: #333;
   cursor: pointer;
-  text-decoration: none;
 }
 .menu .active {
   color: #4b8fca;
@@ -76,6 +74,8 @@
   background: #f9f9f9;
   padding: 20px;
   overflow-y: auto;
+  position: relative;
+  z-index: 1;
 }
 
 /* Topbar */
@@ -87,14 +87,13 @@
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
   padding: 10px;
   background: #fff;
-position: absolute;
-width: 100%;
+  width: 100%;
   top: 0;
   right: 0;
-  z-index: 100;
+  z-index: 1000;
   border-radius: 5px;
 }
-.side-icon{
+.side-icon {
   background: #ff6600;
   color: #fff;
   padding: 3px;
@@ -158,9 +157,10 @@ width: 100%;
   color: white;
   border-radius: 6px;
 }
-.logo img{
+.logo img {
   width: 100px;
 }
+
 /* Cards */
 .cards-row {
   display: flex;
@@ -175,7 +175,6 @@ width: 100%;
   padding: 20px;
   flex: 1 1 300px;
   height: 250px;
-
 }
 .card-title {
   display: flex;
@@ -230,7 +229,7 @@ width: 100%;
   margin-top: 30px;
   flex-wrap: wrap;
 }
-.chat-box{
+.chat-box {
   overflow: scroll;
   max-height: 390px;
 }
@@ -275,43 +274,63 @@ width: 100%;
 /* Responsive */
 @media (max-width: 768px) {
   .menu-toggle {
-    display: inline-block;
+    display: block;
+    z-index: 2001;
+    position: fixed;
+    top: 20px;
+    left: 20px;
   }
 
   .sidebar {
     position: fixed;
-    left: -250px;
+    left: -240px;
     top: 0;
     bottom: 0;
     height: 100vh;
+    transition: left 0.3s ease;
+    z-index: 2000;
     background: #fff;
   }
 
   .sidebar.open {
     left: 0;
-    background: #f4f5f7;
+  }
+
+  .close-sidebar {
+    display: block;
+    z-index: 2001;
+    position: fixed;
+    top: 20px;
+    right: 20px;
   }
 
   .main-content {
-    padding: 15px;
+    margin-left: 0;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+    padding-top: 80px;
   }
 
   .topbar {
+    position: fixed;
 
-    align-items: flex-start;
-    gap: 10px;
-    width: 100%;
+    z-index: 2000;
+    top: 0;
+  
+
   }
 
+  .cards-row {
+    margin-top: 70px;
+  }
 
   .cards-row,
   .bottom-section {
     flex-direction: column;
   }
-.cards-row{
-  margin-top: 120px;
-}
   .analysis {
     width: 100%;
   }
 }
+
