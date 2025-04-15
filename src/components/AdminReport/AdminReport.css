@@ -5,6 +5,7 @@
     border-radius: 0.5rem;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     overflow-x: auto;
+    width: 100%;
   }
   
   .reports-table {
@@ -158,6 +159,7 @@
     color: #333;
   }
   
+  
   .report-info strong {
     color: #666;
     margin-right: 0.5rem;
@@ -177,5 +179,9 @@
   
     .report-header h2 {
       font-size: 1.25rem;
+    }
+    .reports-table-container{
+      overflow-x: scroll;
+     width: 100%;
     }
   }

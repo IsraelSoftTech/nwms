@@ -87,23 +87,7 @@
     position: relative;
   }
   
-  /* Topbar */
-  .topbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
-    padding: 10px;
-    background: #fff;
-    position: absolute;
-   
-    top: 0;
-    right: 0;
-    z-index: 100;
-    border-radius: 5px;
-  }
-  
+
   .side-icon {
     background: #ff6600;
     color: #fff;
@@ -121,29 +105,19 @@
     display: none;
   }
   
-  .search-box {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    background: white;
-    padding: 8px 12px;
-    border-radius: 20px;
-    margin: 10px 0;
-    max-width: 400px;
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
-  }
-  
+
   .search-box input {
     border: none;
     outline: none;
-    margin-left: 8px;
-    flex: 1;
+ 
+   
   }
   
   .topbar-icons {
     display: flex;
     align-items: center;
     gap: 15px;
+ 
   }
   
   .notif {
@@ -528,6 +502,18 @@ flex: 1;
       left: 0;
       background: #fff;
     }
+    .search-box {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      background: white;
+      padding: 8px 12px;
+      border-radius: 20px;
+      margin-left: 40px ;
+      max-width: 180px;
+      box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+    }
+    
   
     .close-sidebar {
       display: block;
@@ -549,5 +535,5 @@ flex: 1;
     }
   } 
 
-  /* ---------------------------------------------------------------------- */
+
   

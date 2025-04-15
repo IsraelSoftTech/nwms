@@ -228,13 +228,13 @@ const AdminDash = () => {
         {/* Bottom Section */}
         <section className="bottom-section">
           <div className="analysis">
-            <h4>Analysis</h4>
+            <h3>Analysis</h3>
             <p>Report Submission</p>
             <Bar data={graphData} options={graphOptions} />
           </div>
 
           <div className="chat-box">
-            <h4>Chats</h4>
+            <h3>Chats</h3>
             <ul>
               <li>
                 <img src="https://i.pravatar.cc/40?img=1" alt="Arlo" />

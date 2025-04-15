@@ -271,11 +271,7 @@ const AdminReport = () => {
 
         {/* Bottom Section */}
         <section className="bottom-section">
-          <div className="analysis">
-            <h4>Analysis</h4>
-            <p>Report Submission</p>
-            <Bar data={graphData} options={graphOptions} />
-          </div>
+        
 
           {/* Reports Table */}
           <div className="reports-table-container">
