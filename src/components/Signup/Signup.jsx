@@ -34,8 +34,8 @@ const Signup = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
 
-    // Enable button only when all fields are filled & passwords match
-    const { username, firstName, lastName, email, password, confirmPassword } = formData;
+    // Enable button only when all fields are filled, passwords match, and meet criteria
+    const { username, firstName, lastName, email, password, confirmPassword } = { ...formData, [name]: value };
     setIsButtonActive(
       username.trim() !== "" &&
       firstName.trim() !== "" &&
@@ -43,7 +43,8 @@ const Signup = () => {
       email.trim() !== "" &&
       password.trim() !== "" &&
       confirmPassword.trim() !== "" &&
-      password === confirmPassword
+      password === confirmPassword && // Ensure passwords match
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/.test(password) // Validate password criteria
     );
   };
 
@@ -65,10 +66,10 @@ const Signup = () => {
       return;
     }
 
-    // Validate password (min 8 characters, must include special character)
-    if (!/(?=.*[!@#$%^&*])(?=.*[a-zA-Z]).{8,}/.test(password)) {
+    // Validate password (min 8 characters, must include letters, numbers, and at least 1 special character)
+    if (!/(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}/.test(password)) {
       setMessageType("error");
-      setMessage("⚠️ Password must be at least 8 characters and include a special character.");
+      setMessage("⚠️ Password must be at least 8 characters and include letters, numbers, and a special character.");
       return;
     }
 

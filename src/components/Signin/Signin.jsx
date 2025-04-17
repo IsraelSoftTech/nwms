@@ -62,7 +62,10 @@ const Signin = () => {
 
       setMessageType("success");
       setMessage("✅ Login successful! Redirecting...");
-      setTimeout(() => navigate("/user-dash"), 2000);
+      setTimeout(() => {
+        localStorage.setItem("username", username); // Save username to local storage
+        navigate("/user-dash");
+      }, 2000);
     } catch (error) {
       setMessageType("error");
       setMessage("❌ Something went wrong. Try again.");

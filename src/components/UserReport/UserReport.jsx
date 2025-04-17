@@ -19,11 +19,12 @@ import Profile from '../Profile/Profile';
 import { database, ref, set, get, child } from '../../firebase'; // Import Firebase functions
 
 const UserReport = () => {
+  const [sidebarOpen, setSidebarOpen] = useState(false); // Control sidebar visibility
   const [wasteType, setWasteType] = useState('');
   const [location, setLocation] = useState('');
   const [googleLink, setGoogleLink] = useState('');
   const [date, setDate] = useState('');
-  const [user, setUser] = useState('');
+  const [user, setUser] = useState(localStorage.getItem("username") || ''); // Autofill username from local storage
   const [message, setMessage] = useState('');
   const [image, setImage] = useState(null);
   const [showProfileModal, setShowProfileModal] = useState(false);
@@ -77,12 +78,12 @@ const UserReport = () => {
     try {
       await set(ref(database, 'reports/' + user + '/' + Date.now()), reportData); // Save report under user ID
       setMessage("Report Submitted successfully");
+      setTimeout(() => setMessage(''), 3000); // Clear the message after 3 seconds
       fetchCounts(); // Refresh counts
       setWasteType('');
       setLocation('');
       setGoogleLink('');
       setDate('');
-      setUser('');
       setImage(null);
     } catch (error) {
       console.error("Error saving report: ", error);
@@ -101,13 +102,15 @@ const UserReport = () => {
   return (
     <div className="admin-container">
       {/* Sidebar */}
-      <aside className="sidebar">
+      <aside className={`sidebar ${sidebarOpen ? "open" : ""}`}> {/* Sidebar component */}
         <div className="logo">
           <h1>Waste <span style={{ color: "#ff6600" }}>Manager</span></h1>
         </div>
-        <button className="close-sidebar">
-          <FaTimes />
-        </button>
+        {sidebarOpen && ( // Close button when sidebar is open
+          <button className="close-sidebar" onClick={() => setSidebarOpen(false)}>
+            <FaTimes /> {/* Close icon */}
+          </button>
+        )}
         <ul className="menu">
           <li>
             <Link to="/user-dash" className="link-no-style">
@@ -148,8 +151,8 @@ const UserReport = () => {
       {/* Main Content */}
       <main className="main-content">
         <header className="topbar">
-          <button className="menu-toggle">
-            <FaBars />
+        <button className="menu-toggle" onClick={() => setSidebarOpen(!sidebarOpen)}> {/* Sidebar toggle */}
+            <FaBars /> {/* Menu icon */}
           </button>
 
           <div className="search-box">
@@ -311,7 +314,7 @@ const UserReport = () => {
                       type="text" 
                       className="form-input"
                       value={user}
-                      onChange={(e) => setUser(e.target.value)}
+                      readOnly // Set field to read-only
                     />
                   </div>
                   <button className="submit-button">Submit Waste Report</button>

@@ -70,11 +70,11 @@
     display: none;
     background: none;
     border: none;
-    font-size: 24px;
-    color: #333;
+    font-size: 18px;
+    color: #8a8787;
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 25px;
+    right: 7px;
     z-index: 2000;
   }
   
