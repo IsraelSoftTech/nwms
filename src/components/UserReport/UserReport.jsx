@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import "./UserReport.css";
 import {
   FaBars,
@@ -14,63 +14,100 @@ import {
 } from "react-icons/fa";
 import { MdAutoGraph, MdDashboard, MdReportProblem } from "react-icons/md";
 import { FiLogOut } from "react-icons/fi";
-import { Bar } from "react-chartjs-2";
-import {
-  Chart as ChartJS,
-  BarElement,
-  CategoryScale,
-  LinearScale,
-  Tooltip,
-  Legend,
-} from "chart.js";
 import { Link } from 'react-router-dom';
-import Profile from '../Profile/Profile'; // Import Profile component
-
-ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
+import Profile from '../Profile/Profile';
+import { database, ref, set, get, child } from '../../firebase'; // Import Firebase functions
 
 const UserReport = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [showProfileModal, setShowProfileModal] = useState(false); // State for the profile modal
+  const [wasteType, setWasteType] = useState('');
+  const [location, setLocation] = useState('');
+  const [googleLink, setGoogleLink] = useState('');
+  const [date, setDate] = useState('');
+  const [user, setUser] = useState('');
+  const [message, setMessage] = useState('');
+  const [image, setImage] = useState(null);
+  const [showProfileModal, setShowProfileModal] = useState(false);
+  const [submittedReportsCount, setSubmittedReportsCount] = useState(0);
+  const [weeklyReportsCount, setWeeklyReportsCount] = useState(0);
 
-  const graphData = {
-    labels: ["Week 1", "Week 2", "Week 3", "Week 4"],
-    datasets: [
-      {
-        label: "Reports Submitted",
-        data: [12, 19, 10, 15],
-        backgroundColor: "#ff6600",
-        borderRadius: 6,
-      },
-    ],
+  const fetchCounts = async () => {
+    const userId = user; // Assuming user is the unique identifier for the logged-in user
+    const reportsRef = ref(database, 'reports/');
+
+    try {
+      const snapshot = await get(child(reportsRef, userId));
+      if (snapshot.exists()) {
+        const reports = snapshot.val();
+        const reportEntries = Object.values(reports);
+        
+        setSubmittedReportsCount(reportEntries.length);
+
+        // Count reports submitted in the current week
+        const currentDate = new Date();
+        const firstDayOfWeek = new Date(currentDate.setDate(currentDate.getDate() - currentDate.getDay()));
+        const weeklyCount = reportEntries.filter(report => new Date(report.date) >= firstDayOfWeek).length;
+
+        setWeeklyReportsCount(weeklyCount);
+      }
+    } catch (error) {
+      console.error("Error fetching report counts: ", error);
+    }
   };
 
-  const graphOptions = {
-    responsive: true,
-    plugins: {
-      legend: {
-        display: true,
-        position: "top",
-      },
-    },
-    scales: {
-      y: {
-        beginAtZero: true,
-      },
-    },
+  useEffect(() => {
+    if (user) {
+      fetchCounts();
+    }
+  }, [user]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const generatedGoogleLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}`;
+    setGoogleLink(generatedGoogleLink);
+
+    const reportData = {
+      wasteType,
+      location,
+      googleLink: generatedGoogleLink,
+      date,
+      user,
+      image: image ? URL.createObjectURL(image) : null,
+    };
+
+    try {
+      await set(ref(database, 'reports/' + user + '/' + Date.now()), reportData); // Save report under user ID
+      setMessage("Report Submitted successfully");
+      fetchCounts(); // Refresh counts
+      setWasteType('');
+      setLocation('');
+      setGoogleLink('');
+      setDate('');
+      setUser('');
+      setImage(null);
+    } catch (error) {
+      console.error("Error saving report: ", error);
+    }
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file && file.size <= 5 * 1024 * 1024) {
+      setImage(file);
+    } else {
+      alert('Please select an image file smaller than 5MB.');
+    }
   };
 
   return (
     <div className="admin-container">
       {/* Sidebar */}
-      <aside className={`sidebar ${sidebarOpen ? "open" : ""}`}>
+      <aside className="sidebar">
         <div className="logo">
-          <h1>Waste <span style={{color:"#ff6600"}}>Manager</span></h1>
+          <h1>Waste <span style={{ color: "#ff6600" }}>Manager</span></h1>
         </div>
-        {sidebarOpen && (
-          <button className="close-sidebar" onClick={() => setSidebarOpen(false)}>
-            <FaTimes />
-          </button>
-        )}
+        <button className="close-sidebar">
+          <FaTimes />
+        </button>
         <ul className="menu">
           <li>
             <Link to="/user-dash" className="link-no-style">
@@ -103,7 +140,7 @@ const UserReport = () => {
             </Link>
           </li>
         </ul>
-        <button className="logout" onClick={() => setShowProfileModal(true)}>
+        <button className="logout">
           <FiLogOut /> Log out
         </button>
       </aside>
@@ -111,7 +148,7 @@ const UserReport = () => {
       {/* Main Content */}
       <main className="main-content">
         <header className="topbar">
-          <button className="menu-toggle" onClick={() => setSidebarOpen(!sidebarOpen)}>
+          <button className="menu-toggle">
             <FaBars />
           </button>
 
@@ -137,7 +174,7 @@ const UserReport = () => {
               <FaRegFileAlt className="card-icon" />
               <div className="title-tools" style={{ display: "grid" }}>
                 <h4>My Submitted Reports</h4>
-                <p>20</p>
+                <p>{submittedReportsCount}</p>
               </div>
             </div>
             <div className="sub-cards">
@@ -163,10 +200,9 @@ const UserReport = () => {
               <MdAutoGraph className="card-icon" />
               <div className="title-tools" style={{ display: "grid" }}>
                 <h4>My Analysis</h4>
-                <p>9 reports this week</p>
+                <p>{weeklyReportsCount} reports this week</p>
               </div>
             </div>
-
             <div className="sub-cards">
               <div className="sub-card">
                 <MdAutoGraph className="sub-card-icon" />
@@ -218,12 +254,12 @@ const UserReport = () => {
             <h3>Report Submission Form</h3>
             <div className="form-container">
               <h2>Report a waste</h2>
-              <div className="form-content">
+              <form className="form-content" onSubmit={handleSubmit}>
                 <div className="form-left">
                   <div className="form-group">
                     <label>Waste Type</label>
-                    <select className="form-input">
-                      <option value="" disabled selected>Select waste type</option>
+                    <select className="form-input" value={wasteType} onChange={(e) => setWasteType(e.target.value)}>
+                      <option value="" disabled>Select waste type</option>
                       <option value="Plastic">Plastic</option>
                       <option value="Metallic">Metallic</option>
                       <option value="Glass">Glass</option>
@@ -236,6 +272,8 @@ const UserReport = () => {
                       type="text" 
                       placeholder="Enter Location"
                       className="form-input"
+                      value={location}
+                      onChange={(e) => setLocation(e.target.value)}
                     />
                   </div>
                   <div className="form-group">
@@ -243,6 +281,17 @@ const UserReport = () => {
                     <input 
                       type="text" 
                       className="form-input"
+                      value={googleLink}
+                      readOnly
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label>Upload Image</label>
+                    <input 
+                      type="file" 
+                      accept="image/*" 
+                      className="form-input"
+                      onChange={handleImageChange}
                     />
                   </div>
                 </div>
@@ -252,13 +301,8 @@ const UserReport = () => {
                     <input 
                       type="date" 
                       className="form-input"
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label>Image</label>
-                    <input 
-                      type="file" 
-                      className="form-input"
+                      value={date}
+                      onChange={(e) => setDate(e.target.value)}
                     />
                   </div>
                   <div className="form-group">
@@ -266,17 +310,20 @@ const UserReport = () => {
                     <input 
                       type="text" 
                       className="form-input"
+                      value={user}
+                      onChange={(e) => setUser(e.target.value)}
                     />
                   </div>
                   <button className="submit-button">Submit Waste Report</button>
                 </div>
-              </div>
+              </form>
+              {message && <div className="success-message">{message}</div>}
             </div>
           </div>
         </section>
       </main>
 
-      {showProfileModal && <Profile onClose={() => setShowProfileModal(false)} />} {/* Modal Component */}
+      {showProfileModal && <Profile onClose={() => setShowProfileModal(false)} />}
     </div>
   );
 };

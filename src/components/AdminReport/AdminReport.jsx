@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import './AdminReport.css';
+import React, { useState, useEffect } from 'react'; // Import necessary React hooks
+import './AdminReport.css'; // Import CSS for styling the component
 import {
-  FaBars,
+  FaBars, // Import icons from react-icons
   FaBell,
   FaRegCalendarAlt,
   FaRegFileAlt,
@@ -16,7 +16,7 @@ import {
 } from "react-icons/fa";
 import { MdAutoGraph, MdDashboard, MdReportProblem } from "react-icons/md";
 import { FiLogOut } from "react-icons/fi";
-import { Bar } from "react-chartjs-2";
+
 import {
   Chart as ChartJS,
   BarElement,
@@ -24,60 +24,63 @@ import {
   LinearScale,
   Tooltip,
   Legend,
-} from "chart.js";
-import logo from "../../assets/logo.png";
-import { Link } from 'react-router-dom';
-import { database, ref, get } from "../../firebase";
+} from "chart.js"; // Import Chart.js modules
+import logo from "../../assets/logo.png"; // Import logo image
+import { Link } from 'react-router-dom'; // Import Link for navigation
+import { database, ref, get } from "../../firebase"; // Import Firebase database functions
 import Profile from '../Profile/Profile'; // Import Profile component
 
+// Register Chart.js components
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 const AdminReport = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [reports, setReports] = useState([]);
-  const [reportCount, setReportCount] = useState(0);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedReport, setSelectedReport] = useState(null);
-  const [showProfileModal, setShowProfileModal] = useState(false); // State for the profile modal
+  // State variables
+  const [sidebarOpen, setSidebarOpen] = useState(false); // Control sidebar visibility
+  const [reports, setReports] = useState([]); // Store reports data
+  const [reportCount, setReportCount] = useState(0); // Count of reports
+  const [error, setError] = useState(null); // Store error messages
+  const [loading, setLoading] = useState(false); // Loading state
+  const [searchQuery, setSearchQuery] = useState(''); // Store search query
+  const [selectedReport, setSelectedReport] = useState(null); // Store selected report details
+  const [showProfileModal, setShowProfileModal] = useState(false); // Control profile modal visibility
 
   // Fetch reports on component mount
   useEffect(() => {
     fetchReports();
   }, []);
 
-  const fetchReports = async () => {
+  const fetchReports = async () => { // Function to fetch reports from Firebase
     try {
-      setLoading(true);
-      const reportsRef = ref(database, 'reports');
-      const snapshot = await get(reportsRef);
-      
-      if (snapshot.exists()) {
-        const data = snapshot.val();
-        const reportArray = Object.entries(data).map(([id, report]) => ({ id, ...report }));
-        setReports(reportArray.sort((a, b) => b.timestamp - a.timestamp));
-        setReportCount(reportArray.length);
+      setLoading(true); // Set loading state to true
+      const reportsRef = ref(database, 'reports'); // Reference to reports in Firebase
+      const snapshot = await get(reportsRef); // Get reports snapshot
+
+      if (snapshot.exists()) { // Check if reports exist
+        const data = snapshot.val(); // Get the data
+        const reportArray = Object.entries(data).map(([id, report]) => ({ id, ...report })); // Convert to array with IDs
+        setReports(reportArray.sort((a, b) => b.timestamp - a.timestamp)); // Sort reports by timestamp
+        setReportCount(reportArray.length); // Update report count
       } else {
-        setReports([]);
-        setReportCount(0);
+        setReports([]); // No reports found
+        setReportCount(0); // Reset report count
       }
     } catch (error) {
-      console.error('Error fetching reports:', error);
-      setError('Failed to load reports. Please try again.');
+      console.error('Error fetching reports:', error); // Log error
+      setError('Failed to load reports. Please try again.'); // Set error message
     } finally {
-      setLoading(false);
+      setLoading(false); // Reset loading state
     }
   };
 
-  const handleReportClick = (report) => {
-    setSelectedReport(report);
+  const handleReportClick = (report) => { // Function to handle report click
+    setSelectedReport(report); // Set selected report
   };
 
-  const closeReport = () => {
-    setSelectedReport(null);
+  const closeReport = () => { // Function to close report details
+    setSelectedReport(null); // Reset selected report
   };
 
+  // Filter reports based on search query
   const filteredReports = reports.filter(report => 
     report.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
     report.description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -85,185 +88,187 @@ const AdminReport = () => {
     report.status?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  // Data for the bar chart
   const graphData = {
     labels: ["Week 1", "Week 2", "Week 3", "Week 4"],
     datasets: [
       {
         label: "Reports Submitted",
-        data: [12, 19, 10, 15],
-        backgroundColor: "#ff6600",
-        borderRadius: 6,
+        data: [12, 19, 10, 15], // Sample data for reports
+        backgroundColor: "#ff6600", // Bar color
+        borderRadius: 6, // Rounded corners
       },
     ],
   };
 
+  // Options for the bar chart
   const graphOptions = {
     responsive: true,
     plugins: {
       legend: {
         display: true,
-        position: "top",
+        position: "top", // Legend position
       },
     },
     scales: {
       y: {
-        beginAtZero: true,
+        beginAtZero: true, // Y-axis starts at zero
       },
     },
   };
 
   return (
-    <div className="admin-container">
+    <div className="admin-container"> {/* Main container for admin report */}
       {/* Sidebar */}
-      <aside className={`sidebar ${sidebarOpen ? "open" : ""}`}>
-        <div className="logo">
-          <h1>Waste <span style={{ color: "#ff6600" }}>Manager</span></h1>
+      <aside className={`sidebar ${sidebarOpen ? "open" : ""}`}> {/* Sidebar component */}
+        <div className="logo"> {/* Logo area */}
+          <h1>Waste <span style={{ color: "#ff6600" }}>Manager</span></h1> {/* Logo title */}
         </div>
-        {sidebarOpen && (
+        {sidebarOpen && ( // Close button when sidebar is open
           <button className="close-sidebar" onClick={() => setSidebarOpen(false)}>
-            <FaTimes />
+            <FaTimes /> {/* Close icon */}
           </button>
         )}
-        <ul className="menu">
+        <ul className="menu"> {/* Navigation menu */}
           <li>
-            <Link to="/admin-dash" className="link-no-style">
+            <Link to="/admin-dash" className="link-no-style"> {/* Dashboard link */}
               <MdDashboard /> Dashboard
             </Link>
           </li>
-          <li className="active">
+          <li className="active"> {/* Active link for reports */}
             <Link to="/admin-report" className="link-no-style">
               <FaRegFileAlt className="side-icon" /> Reports
             </Link>
           </li>
           <li>
-            <Link to="/admin-schedule" className="link-no-style">
+            <Link to="/admin-schedule" className="link-no-style"> {/* Schedule link */}
               <FaRegCalendarAlt /> Schedule
             </Link>
           </li>
           <li>
-            <Link to="/admin-illegal" className="link-no-style">
+            <Link to="/admin-illegal" className="link-no-style"> {/* Illegal dumps link */}
               <MdReportProblem /> Illegal Dumps
             </Link>
           </li>
           <li>
-            <Link to="/admin-education" className="link-no-style">
+            <Link to="/admin-education" className="link-no-style"> {/* Education link */}
               <FaGraduationCap /> Education
             </Link>
           </li>
           <li>
-            <Link to="/admin-chat" className="link-no-style">
+            <Link to="/admin-chat" className="link-no-style"> {/* Chat link */}
               <FaCommentAlt /> Chat
             </Link>
           </li>
         </ul>
-        <button className="logout" onClick={() => setShowProfileModal(true)}>
+        <button className="logout" onClick={() => setShowProfileModal(true)}> {/* Logout button */}
           <FiLogOut /> Log out
         </button>
       </aside>
 
       {/* Main Content */}
-      <main className="main-content">
-        <header className="topbar">
-          <button className="menu-toggle" onClick={() => setSidebarOpen(!sidebarOpen)}>
-            <FaBars />
+      <main className="main-content"> {/* Main content area */}
+        <header className="topbar"> {/* Top bar with search and icons */}
+          <button className="menu-toggle" onClick={() => setSidebarOpen(!sidebarOpen)}> {/* Sidebar toggle */}
+            <FaBars /> {/* Menu icon */}
           </button>
 
-          <div className="search-box">
-            <FaSearch className="search-icon" />
+          <div className="search-box"> {/* Search input */}
+            <FaSearch className="search-icon" /> {/* Search icon */}
             <input 
               type="text" 
               placeholder="Search reports..." 
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              value={searchQuery} // Controlled input for search
+              onChange={(e) => setSearchQuery(e.target.value)} // Update search query on input change
             />
           </div>
 
-          <div className="topbar-icons">
-            <div className="notif">
-              <FaBell />
-              <span className="notif-count">1</span>
+          <div className="topbar-icons"> {/* Notification and profile icons */}
+            <div className="notif"> {/* Notification area */}
+              <FaBell /> {/* Bell icon */}
+              <span className="notif-count">1</span> {/* Notification count */}
             </div>
-            <img src="https://i.pravatar.cc/40" alt="User" className="profile-pic" />
-            <button className="ad-btn" onClick={() => setShowProfileModal(true)}>Ad</button>
+            <img src="https://i.pravatar.cc/40" alt="User" className="profile-pic" /> {/* User profile picture */}
+            <button className="ad-btn" onClick={() => setShowProfileModal(true)}>Ad</button> {/* Ad button */}
           </div>
         </header>
 
         {/* Top Cards */}
-        <section className="cards-row">
-          <div className="card blue">
-            <div className="card-title">
-              <FaRegFileAlt className="card-icon" />
+        <section className="cards-row"> {/* Row for displaying summary cards */}
+          <div className="card blue"> {/* Card for report summary */}
+            <div className="card-title"> {/* Card title area */}
+              <FaRegFileAlt className="card-icon" /> {/* Card icon */}
               <div className="title-tools" style={{ display: "grid" }}>
-                <h4>Reports</h4>
-                <p>{reportCount}</p>
+                <h4>Reports</h4> {/* Reports title */}
+                <p>{reportCount}</p> {/* Total report count */}
               </div>
             </div>
-            <div className="sub-cards">
-              <div className="sub-card">
-                <FaTrashAlt className="sub-card-icon" />
+            <div className="sub-cards"> {/* Sub-cards for detailed counts */}
+              <div className="sub-card"> {/* Sub-card for pending reports */}
+                <FaTrashAlt className="sub-card-icon" /> {/* Icon for pending reports */}
                 <div className="sub-card-tools">
-                  <h1>{reports.filter(r => r.status === 'pending').length}</h1>
-                  <p>Pending Reports</p>
+                  <h1>{reports.filter(r => r.status === 'pending').length}</h1> {/* Count of pending reports */}
+                  <p>Pending Reports</p> {/* Label for pending reports */}
                 </div>
               </div>
-              <div className="sub-card">
-                <FaShuttleVan className="sub-card-icon" />
+              <div className="sub-card"> {/* Sub-card for in-progress reports */}
+                <FaShuttleVan className="sub-card-icon" /> {/* Icon for in-progress reports */}
                 <div className="sub-card-tools">
-                  <h1>{reports.filter(r => r.status === 'in-progress').length}</h1>
-                  <p>In Progress</p>
+                  <h1>{reports.filter(r => r.status === 'in-progress').length}</h1> {/* Count of in-progress reports */}
+                  <p>In Progress</p> {/* Label for in-progress reports */}
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="card blue">
-            <div className="card-title">
-              <MdAutoGraph className="card-icon" />
+          <div className="card blue"> {/* Card for analysis summary */}
+            <div className="card-title"> {/* Card title area */}
+              <MdAutoGraph className="card-icon" /> {/* Card icon */}
               <div className="title-tools" style={{ display: "grid" }}>
-                <h4>Analysis</h4>
-                <p>{reports.filter(r => r.status === 'resolved').length} resolved this week</p>
+                <h4>Analysis</h4> {/* Analysis title */}
+                <p>{reports.filter(r => r.status === 'resolved').length} resolved this week</p> {/* Resolved reports count */}
               </div>
             </div>
 
-            <div className="sub-cards">
-              <div className="sub-card">
-                <MdAutoGraph className="sub-card-icon" />
+            <div className="sub-cards"> {/* Sub-cards for detailed counts */}
+              <div className="sub-card"> {/* Sub-card for resolved reports */}
+                <MdAutoGraph className="sub-card-icon" /> {/* Icon for resolved reports */}
                 <div className="sub-card-tools">
-                  <h1>{reports.filter(r => r.status === 'resolved').length}</h1>
-                  <p>Resolved Reports</p>
+                  <h1>{reports.filter(r => r.status === 'resolved').length}</h1> {/* Count of resolved reports */}
+                  <p>Resolved Reports</p> {/* Label for resolved reports */}
                 </div>
               </div>
-              <div className="sub-card">
-                <FaShuttleVan className="sub-card-icon" />
+              <div className="sub-card"> {/* Sub-card for in-progress reports */}
+                <FaShuttleVan className="sub-card-icon" /> {/* Icon for in-progress reports */}
                 <div className="sub-card-tools">
-                  <h1>{reports.filter(r => r.status === 'in-progress').length}</h1>
-                  <p>In Progress</p>
+                  <h1>{reports.filter(r => r.status === 'in-progress').length}</h1> {/* Count of in-progress reports */}
+                  <p>In Progress</p> {/* Label for in-progress reports */}
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="card blue">
-            <div className="card-title">
-              <FaRegCalendarAlt className="card-icon" />
+          <div className="card blue"> {/* Card for schedules summary */}
+            <div className="card-title"> {/* Card title area */}
+              <FaRegCalendarAlt className="card-icon" /> {/* Card icon */}
               <div className="title-tools" style={{ display: "grid" }}>
-                <h4>Schedules</h4>
-                <p>12</p>
+                <h4>Schedules</h4> {/* Schedules title */}
+                <p>12</p> {/* Sample schedule count */}
               </div>
             </div>
-            <div className="sub-cards">
-              <div className="sub-card">
-                <FaRegCalendarAlt className="sub-card-icon" />
+            <div className="sub-cards"> {/* Sub-cards for detailed counts */}
+              <div className="sub-card"> {/* Sub-card for resolved schedules */}
+                <FaRegCalendarAlt className="sub-card-icon" /> {/* Icon for resolved schedules */}
                 <div className="sub-card-tools">
-                  <h1>1</h1>
-                  <p>Resolved Sched...</p>
+                  <h1>1</h1> {/* Count of resolved schedules */}
+                  <p>Resolved Sched...</p> {/* Label for resolved schedules */}
                 </div>
               </div>
-              <div className="sub-card">
-                <MdReportProblem className="sub-card-icon" />
+              <div className="sub-card"> {/* Sub-card for unresolved schedules */}
+                <MdReportProblem className="sub-card-icon" /> {/* Icon for unresolved schedules */}
                 <div className="sub-card-tools">
-                  <h1>0</h1>
-                  <p>Unresolved Sched...</p>
+                  <h1>0</h1> {/* Count of unresolved schedules */}
+                  <p>Unresolved Sched...</p> {/* Label for unresolved schedules */}
                 </div>
               </div>
             </div>
@@ -271,48 +276,48 @@ const AdminReport = () => {
         </section>
 
         {/* Bottom Section */}
-        <section className="bottom-section">
+        <section className="bottom-section"> {/* Section for reports table */}
           {/* Reports Table */}
-          <div className="reports-table-container">
-            <table className="reports-table">
+          <div className="reports-table-container"> {/* Container for reports table */}
+            <table className="reports-table"> {/* Table for displaying reports */}
               <thead>
                 <tr>
-                  <th>Waste Type</th>
-                  <th>Location</th>
-                  <th>Google Link</th>
-                  <th>Date</th>
-                  <th>User</th>
-                  <th>Actions</th>
+                  <th>Waste Type</th> {/* Column for waste type */}
+                  <th>Location</th> {/* Column for location */}
+                  <th>Google Link</th> {/* Column for Google link */}
+                  <th>Date</th> {/* Column for date */}
+                  <th>User</th> {/* Column for user */}
+                  <th>Actions</th> {/* Column for action buttons */}
                 </tr>
               </thead>
               <tbody>
-                {loading ? (
+                {loading ? ( // Check if loading
                   <tr>
-                    <td colSpan="6" className="loading-cell">Loading reports...</td>
+                    <td colSpan="6" className="loading-cell">Loading reports...</td> {/* Loading message */}
                   </tr>
-                ) : filteredReports.length === 0 ? (
+                ) : filteredReports.length === 0 ? ( // Check if no reports found
                   <tr>
-                    <td colSpan="6" className="empty-cell">No reports found</td>
+                    <td colSpan="6" className="empty-cell">No reports found</td> {/* No reports message */}
                   </tr>
                 ) : (
-                  filteredReports.map((report) => (
-                    <tr key={report.id} onClick={() => handleReportClick(report)}>
-                      <td>{report.title}</td>
-                      <td>{report.description}</td>
-                      <td>{report.location}</td>
+                  filteredReports.map((report) => ( // Map over filtered reports to display them
+                    <tr key={report.id} onClick={() => handleReportClick(report)}> {/* Row for each report */}
+                      <td>{report.title}</td> {/* Display report title */}
+                      <td>{report.description}</td> {/* Display report description */}
+                      <td>{report.location}</td> {/* Display report location */}
                       <td>
                         <span className={`status-badge ${report.status?.toLowerCase()}`}>
-                          {report.status}
+                          {report.status} {/* Display report status with badge */}
                         </span>
                       </td>
-                      <td>{new Date(report.timestamp).toLocaleDateString()}</td>
+                      <td>{new Date(report.timestamp).toLocaleDateString()}</td> {/* Display report date */}
                       <td>
-                        <div className="action-buttons">
-                          <button className="edit-btn">
-                            <FaEdit />
+                        <div className="action-buttons"> {/* Action buttons for edit/delete */}
+                          <button className="edit-btn"> {/* Edit button */}
+                            <FaEdit /> {/* Edit icon */}
                           </button>
-                          <button className="delete-btn">
-                            <FaTrash />
+                          <button className="delete-btn"> {/* Delete button */}
+                            <FaTrash /> {/* Delete icon */}
                           </button>
                         </div>
                       </td>
@@ -324,23 +329,23 @@ const AdminReport = () => {
           </div>
 
           {/* Report Details Display */}
-          {selectedReport && (
-            <div className="report-display">
-              <div className="selected-report">
-                <div className="report-header">
-                  <h2>{selectedReport.title}</h2>
-                  <button onClick={closeReport} className="close-btn">×</button>
+          {selectedReport && ( // Check if a report is selected
+            <div className="report-display"> {/* Container for selected report details */}
+              <div className="selected-report"> {/* Display selected report */}
+                <div className="report-header"> {/* Header for report details */}
+                  <h2>{selectedReport.title}</h2> {/* Display report title */}
+                  <button onClick={closeReport} className="close-btn">×</button> {/* Close button */}
                 </div>
-                <div className="report-body">
-                  <div className="report-info">
-                    <p><strong>Description:</strong> {selectedReport.description}</p>
-                    <p><strong>Location:</strong> {selectedReport.location}</p>
+                <div className="report-body"> {/* Body for report details */}
+                  <div className="report-info"> {/* Info area for report details */}
+                    <p><strong>Description:</strong> {selectedReport.description}</p> {/* Display report description */}
+                    <p><strong>Location:</strong> {selectedReport.location}</p> {/* Display report location */}
                     <p><strong>Status:</strong> 
                       <span className={`status-badge ${selectedReport.status?.toLowerCase()}`}>
-                        {selectedReport.status}
+                        {selectedReport.status} {/* Display report status with badge */}
                       </span>
                     </p>
-                    <p><strong>Date:</strong> {new Date(selectedReport.timestamp).toLocaleDateString()}</p>
+                    <p><strong>Date:</strong> {new Date(selectedReport.timestamp).toLocaleDateString()}</p> {/* Display report date */}
                   </div>
                 </div>
               </div>
@@ -349,9 +354,9 @@ const AdminReport = () => {
         </section>
       </main>
 
-      {showProfileModal && <Profile onClose={() => setShowProfileModal(false)} />} {/* Modal Component */}
+      {showProfileModal && <Profile onClose={() => setShowProfileModal(false)} />} {/* Render Profile modal if open */}
     </div>
   );
 };
 
-export default AdminReport;
+export default AdminReport; // Export the AdminReport component
