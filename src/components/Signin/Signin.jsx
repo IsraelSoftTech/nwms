@@ -35,7 +35,7 @@ const Signin = () => {
     const { username, password } = credentials;
 
     // Check if user is an admin
-    if (username === "admin_account" && password === "admin1234") {
+    if (username === "admin_account" && password === "admin_password") {
       setMessageType("success");
       setMessage("✅ Admin login successful! Redirecting...");
       setTimeout(() => navigate("/admin-dash"), 2000);

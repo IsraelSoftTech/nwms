@@ -34,7 +34,7 @@ const Signup = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
 
-    // Enable button only when all fields are filled, passwords match, and meet criteria
+    // Enable button only when all fields are filled and passwords match
     const { username, firstName, lastName, email, password, confirmPassword } = { ...formData, [name]: value };
     setIsButtonActive(
       username.trim() !== "" &&
@@ -43,8 +43,7 @@ const Signup = () => {
       email.trim() !== "" &&
       password.trim() !== "" &&
       confirmPassword.trim() !== "" &&
-      password === confirmPassword && // Ensure passwords match
-      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/.test(password) // Validate password criteria
+      password === confirmPassword // Only check if passwords match
     );
   };
 
@@ -52,39 +51,36 @@ const Signup = () => {
   const handleSignup = async () => {
     const { username, email, firstName, lastName, password, confirmPassword } = formData;
 
-    // Validate username (must not be all numbers)
-    if (!/^(?!\d+$)[a-zA-Z0-9]+$/.test(username)) {
+    // Only validate that passwords match
+    if (password !== confirmPassword) {
       setMessageType("error");
-      setMessage("⚠️ Username must contain letters and cannot be all numbers.");
-      return;
-    }
-
-    // Validate email format
-    if (!/\S+@\S+\.\S+/.test(email)) {
-      setMessageType("error");
-      setMessage("⚠️ Please enter a valid email.");
-      return;
-    }
-
-    // Validate password (min 8 characters, must include letters, numbers, and at least 1 special character)
-    if (!/(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}/.test(password)) {
-      setMessageType("error");
-      setMessage("⚠️ Password must be at least 8 characters and include letters, numbers, and a special character.");
+      setMessage("⚠️ Passwords do not match!");
       return;
     }
 
     // Check if username or email already exists
-    const userRef = ref(database, "users/" + username);
+    const userRef = ref(database, "users");
     try {
       const snapshot = await get(userRef);
       if (snapshot.exists()) {
-        setMessageType("error");
-        setMessage("❌ Username or email already exists!");
-        return;
+        const users = snapshot.val();
+        // Check if username exists
+        if (users[username]) {
+          setMessageType("error");
+          setMessage("❌ Username already exists!");
+          return;
+        }
+        // Check if email exists
+        const emailExists = Object.values(users).some(user => user.email === email);
+        if (emailExists) {
+          setMessageType("error");
+          setMessage("❌ Email already exists!");
+          return;
+        }
       }
 
       // Save user to Firebase
-      await set(userRef, {
+      await set(ref(database, "users/" + username), {
         username,
         firstName,
         lastName,
